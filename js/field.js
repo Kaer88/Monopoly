@@ -9,7 +9,9 @@ export default class Field {
   #basePenalty;
 
   constructor(name, value, eventOnField) {
-
+    this.#fieldName = name;
+    this.#value = value;
+    this.#eventOnField = eventOnField;
   }
 
   get fieldName() {
