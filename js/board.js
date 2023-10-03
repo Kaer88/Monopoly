@@ -40,10 +40,8 @@ export default class Board {
   }
   #renderPlayers() {
     this.#players.forEach((player) => {
-      console.log(player.domElement.parentElement);
       player.domElement.parentElement !== null && player.domElement.remove();
       this.#fields[player.currentField].children[1].append(player.domElement);
-      console.log(player.domElement.parentElement);
     });
   }
   async start() {
@@ -70,19 +68,35 @@ export default class Board {
         document
           .querySelector("#roll-btn")
           .removeEventListener("click", rollBtnHandler);
+        console.log(this.#diceRolled);
         resolve();
       };
       document
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
     });
+
+    // Dobott érték alapján mező beállítása az adott playeren
     const currentPlayerPosition =
       this.#players[this.#currentPlayer].currentField;
     const diceValue = this.#diceRolled.reduce((acc, curr) => (acc += curr));
-    this.#players[this.#currentPlayer].movePlayer(
-      currentPlayerPosition + diceValue,
-    );
+    let targetField;
+    console.log(currentPlayerPosition)
+    // ellenőrizni, hogy az utolsó mezőre érkezve is jól működik-e
+    if (diceValue + currentPlayerPosition > 36) {
+      console.log('why')
+      targetField = Math.abs(
+        currentPlayerPosition + diceValue - this.#fields.length,
+      );
+    } else {
+      targetField = currentPlayerPosition + diceValue;
+    }
+    console.log(targetField);
+    this.#players[this.#currentPlayer].movePlayer(targetField);
+
     this.#renderPlayers();
+
+    // következő játékos beállítása
     if (this.#currentPlayer === this.#players.length - 1) {
       this.#currentPlayer = 0;
     } else {
