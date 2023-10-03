@@ -2,10 +2,12 @@ export const fields = [
   {
     name: "GO",
     value: 0,
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "VINE STREET",
     value: 15,
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Community chest",

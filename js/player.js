@@ -3,9 +3,11 @@ export default class Player {
   #isInJail = false;
   #currentField = 0;
   #name;
+  #domElement;
 
-  constructor(name) {
+  constructor(name, color) {
     this.#name = name;
+    this.#createDomElement(color);
   }
 
   get balance() {
@@ -24,7 +26,13 @@ export default class Player {
   get currentField() {
     return this.#currentField;
   }
-  set currentField(newPosition) {
+  #movePlayer(newPosition) {
     this.#currentField = newPosition;
+  }
+
+  #createDomElement(color) {
+    this.#domElement = document.createElement("DIV");
+    this.#domElement.style.backgroundColor = color;
+    this.#domElement.style.borderRadius = "50%";
   }
 }
