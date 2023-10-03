@@ -1,3 +1,7 @@
+
+/*
+* felső lane: 0 -
+* */
 export const fields = [
   {
     name: "GO",
@@ -41,6 +45,11 @@ export const fields = [
   },
   {
     name: "Bow street",
+    value: 81,
+    event: (targetPlayer) => {},
+  },
+  {
+    name: "Whitechapel road",
     value: 81,
     event: (targetPlayer) => {},
   },
@@ -132,6 +141,16 @@ export const fields = [
   {
     name: "Strand",
     value: 320,
+    event: (targetPlayer) => {},
+  },
+  {
+    name: "Waterwork",
+    value: 3000,
+    event: (targetPlayer) => {},
+  },
+  {
+    name: "Regent street",
+    value: 370,
     event: (targetPlayer) => {},
   },
   {
