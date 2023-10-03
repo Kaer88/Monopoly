@@ -14,21 +14,65 @@ export default class Board {
   #initBoard() {
     const boardDIV = document.createElement("DIV");
     boardDIV.id = "board";
-    boardDIV.style.height = "50rem";
+    boardDIV.style.height = "70rem";
     boardDIV.style.width = "50rem";
-    boardDIV.style.display = "flex";
-    boardDIV.style.flexWrap = "wrap";
-    boardDIV.style.border = "1px solid black";
     boardDIV.style.margin = "auto 5em";
     document.body.append(boardDIV);
-
+    // fill fields array with field html objects
     this.#fields = fields
       .map((field) => new Field(field.name, field.value, field.eventFn))
       .map((fieldOfClass) => {
         return fieldOfClass.domElement;
       });
+
+    /*
+     * ezt még át kell gondolni, griddel bombabiztosabb lenne
+     * */
+    const top = document.createElement("DIV");
+    top.id = "top";
+    top.style.border = "1px solid black";
+    top.style.height = "7rem";
+    top.style.display = "flex";
+
+    const right = document.createElement("DIV");
+    right.id = "right";
+    right.style.border = "1px solid black";
+    right.style.height = "7rem";
+    right.style.width = "40rem";
+    right.style.transform =
+      "rotate(90deg) translateY(-26.5rem) translateX(16.5rem)";
+    right.style.display = "flex";
+
+    const left = document.createElement("DIV");
+    left.id = "right";
+    left.style.border = "1px solid black";
+    left.style.height = "7rem";
+    left.style.width = "40rem";
+    left.style.transform =
+      "rotate(90deg) translateY(16.5rem) translateX(9.4rem)";
+    left.style.display = "flex";
+
+    const bottom = document.createElement("DIV");
+    bottom.id = "right";
+    bottom.style.border = "1px solid black";
+    bottom.style.height = "7rem";
+    bottom.style.transform = "translateY(25.9rem)";
+    bottom.style.display = "flex";
+    bottom.style.flexDirection = "reverse";
+
+    boardDIV.append(top);
+    boardDIV.append(right);
+    boardDIV.append(left);
+    boardDIV.append(bottom);
+
     this.#domElement = boardDIV;
-    this.#fields.forEach((field) => boardDIV.append(field));
+
+    this.#fields.slice(0, 11).forEach((field) => top.append(field));
+    this.#fields.slice(11, 20).forEach((field) => right.append(field));
+    this.#fields.slice(20, 31).forEach((field) => bottom.append(field));
+    this.#fields.slice(31, 40).forEach((field) => left.append(field));
+
+    // this.#fields.forEach((field) => boardDIV.append(field));
   }
 
   /**

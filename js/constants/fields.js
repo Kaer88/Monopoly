@@ -1,7 +1,3 @@
-
-/*
-* felső lane: 0 -
-* */
 export const fields = [
   {
     name: "GO",
