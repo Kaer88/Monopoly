@@ -5,6 +5,11 @@ export default class Player {
   #name;
   #domElement;
 
+  /**
+   *
+   * @param name {string}
+   * @param color {string}
+   */
   constructor(name, color) {
     this.#name = name;
     this.#createDomElement(color);

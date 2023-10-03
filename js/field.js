@@ -8,6 +8,12 @@ export default class Field {
   #nrOfHouses;
   #basePenalty;
 
+  /**
+   *
+   * @param name {string}
+   * @param value {number}
+   * @param eventOnField {function}
+   */
   constructor(name, value, eventOnField) {
     this.#fieldName = name;
     this.#value = value;
