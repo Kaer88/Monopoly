@@ -3,7 +3,7 @@ import Field from "./field.js";
 import Player from "./player.js";
 import DiceControls from "./controls.js";
 import diceRoll from "./util/diceRoll.js";
-import getNextField from "./util/getNextField.js";
+import setNextField from "./util/setNextField.js";
 export default class Board {
   #fields = [];
   #players;
@@ -76,18 +76,19 @@ export default class Board {
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
     });
-    getNextField(
+    // Dobott érték alapján mező beállítása az adott playeren
+    setNextField(
       this.#players,
       this.#currentPlayer,
       this.#diceRolled,
       this.#fields,
     );
-    // Dobott érték alapján mező beállítása az adott playeren
+
     // const currentPlayerPosition =
     //   this.#players[this.#currentPlayer].currentField;
     // const diceValue = this.#diceRolled.reduce((acc, curr) => (acc += curr));
     // let targetField;
-    // if (diceValue + currentPlayerPosition > 36) {
+    // if (diceValue + currentPlayerPosition > 37) {
     //   targetField = Math.abs(
     //     currentPlayerPosition + diceValue - this.#fields.length,
     //   );

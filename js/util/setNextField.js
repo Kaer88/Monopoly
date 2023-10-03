@@ -7,15 +7,15 @@
  */
 
 // egy osztály privát methodja hívogatja, nem ad vissza semmit, csak manipulálja a beadott instance-okat
-// jó ötlet ez?
+// jó ötlet ez? vagy ezzel az erővel az egész #gameplayLoop() mehetne külön file-ba?
 
-export default function getNextField(players, currentPlayer, diceArray, fields) {
+export default function setNextField(players, currentPlayer, diceArray, fields) {
   const currentPlayerPosition =
     players[currentPlayer].currentField;
   const diceValue = diceArray.reduce((acc, curr) => (acc += curr));
   let targetField;
-  // ellenőrizni, hogy az utolsó mezőre érkezve is jól működik-e
-  if (diceValue + currentPlayerPosition > 36) {
+  if (diceValue + currentPlayerPosition > fields.length - 1) {
+    console.log(fields.length)
     targetField = Math.abs(
       currentPlayerPosition + diceValue - fields.length,
     );

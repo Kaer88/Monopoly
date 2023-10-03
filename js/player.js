@@ -35,7 +35,7 @@ export default class Player {
   get domElement() {
     return this.#domElement;
   }
-  #movePlayer(newPosition) {
+  movePlayer(newPosition) {
     this.#currentField = newPosition;
   }
 
