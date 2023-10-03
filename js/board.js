@@ -1,6 +1,6 @@
-import { fields } from "./constants/fields.js";
-import Field from "./field.js";
-import Player from "./player.js";
+import { fields } from './constants/fields.js';
+import Field from './field.js';
+import Player from './player.js';
 
 export default class Board {
   #fields = [];
@@ -8,52 +8,64 @@ export default class Board {
   #domElement;
 
   #generateBoard() {
-    const boardDIV = document.createElement("DIV");
-    boardDIV.id = "board";
-    boardDIV.style.height = "50rem";
-    boardDIV.style.width = "50rem";
-    boardDIV.style.display = "flex";
-    boardDIV.style.flexWrap = "wrap";
-    boardDIV.style.border = "1px solid black";
-    boardDIV.style.margin = "auto 5em";
+    const boardDIV = document.createElement('DIV');
+    boardDIV.id = 'board';
+    boardDIV.style.height = '50rem';
+    boardDIV.style.width = '50rem';
+    boardDIV.style.display = 'flex';
+    boardDIV.style.flexWrap = 'wrap';
+    boardDIV.style.border = '1px solid black';
+    boardDIV.style.margin = 'auto 5em';
     document.body.append(boardDIV);
 
     this.#fields = fields
       .map((field) => new Field(field.name, field.value, field.eventFn))
       .map((fieldOfClass) => {
-        const fieldDiv = document.createElement("DIV");
-        fieldDiv.style.border = "1px solid black";
-        fieldDiv.style.display = "flex";
-        fieldDiv.style.flexDirection = "column";
-        fieldDiv.style.justifyContent = "space-around";
-        fieldDiv.style.alignItems = "center";
-        fieldDiv.style.height = "7rem";
-        fieldDiv.style.width = "5rem";
+        const fieldDiv = document.createElement('DIV');
+        fieldDiv.style.border = '1px solid black';
+        fieldDiv.style.display = 'flex';
+        fieldDiv.style.flexDirection = 'column';
+        fieldDiv.style.justifyContent = 'space-around';
+        fieldDiv.style.alignItems = 'center';
+        fieldDiv.style.height = '7rem';
+        fieldDiv.style.width = '5rem';
 
-        const valueElement = document.createElement("SPAN");
-        const nameElement = document.createElement("SPAN");
+        const valueElement = document.createElement('SPAN');
+        const nameElement = document.createElement('SPAN');
+        const playerElement = document.createElement('DIV');
         valueElement.textContent = `${fieldOfClass.value} $`;
         nameElement.textContent = `${fieldOfClass.fieldName}`;
+        nameElement.style.display = 'flex';
 
         boardDIV.append(fieldDiv);
-        fieldDiv.append(nameElement, valueElement);
+        fieldDiv.append(nameElement, playerElement, valueElement);
+        return fieldDiv;
       });
     this.#domElement = boardDIV;
   }
 
   /**
    *
-   * @param playersList {Array}
+   * @param playersList {Object[]}
+   * @returns {*}
    */
   #addPlayers(playersList) {
     return playersList.map((player) => new Player(player.name, player.color));
   }
+  #renderPlayers() {
+    this.#players.forEach((player) => {
+      console.log(player.domElement.parentElement);
+      player.domElement.parentElement != null && player.domElement.remove();
+      this.#fields[player.currentField].children[1].append(player.domElement);
+    });
+  }
   start() {
     this.#generateBoard();
     this.#players = this.#addPlayers([
-      { name: "Sanyi", color: "red" },
-      { name: "Kakadu Petike", color: "blue" },
+      { name: 'Sanyi', color: 'red' },
+      { name: 'Kakadu Petike', color: 'blue' },
     ]);
+    this.#renderPlayers();
     console.log(this.#players);
   }
 }

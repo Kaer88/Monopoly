@@ -26,6 +26,10 @@ export default class Player {
   get currentField() {
     return this.#currentField;
   }
+
+  get domElement() {
+    return this.#domElement;
+  }
   #movePlayer(newPosition) {
     this.#currentField = newPosition;
   }
@@ -34,5 +38,7 @@ export default class Player {
     this.#domElement = document.createElement("DIV");
     this.#domElement.style.backgroundColor = color;
     this.#domElement.style.borderRadius = "50%";
+    this.#domElement.style.height = '1em'
+    this.#domElement.style.width = '1em'
   }
 }
