@@ -21,33 +21,16 @@ export default class Board {
     this.#fields = fields
       .map((field) => new Field(field.name, field.value, field.eventFn))
       .map((fieldOfClass) => {
-        const fieldDiv = document.createElement('DIV');
-        fieldDiv.style.border = '1px solid black';
-        fieldDiv.style.display = 'flex';
-        fieldDiv.style.flexDirection = 'column';
-        fieldDiv.style.justifyContent = 'space-around';
-        fieldDiv.style.alignItems = 'center';
-        fieldDiv.style.height = '7rem';
-        fieldDiv.style.width = '5rem';
-
-        const valueElement = document.createElement('SPAN');
-        const nameElement = document.createElement('SPAN');
-        const playerElement = document.createElement('DIV');
-        valueElement.textContent = `${fieldOfClass.value} $`;
-        nameElement.textContent = `${fieldOfClass.fieldName}`;
-        nameElement.style.display = 'flex';
-
-        boardDIV.append(fieldDiv);
-        fieldDiv.append(nameElement, playerElement, valueElement);
-        return fieldDiv;
-      });
+        return fieldOfClass.domElement;
+      })
     this.#domElement = boardDIV;
+    this.#fields.forEach(field => boardDIV.append(field))
   }
 
   /**
    *
    * @param playersList {Object[]}
-   * @returns {*}
+   * @returns {Player[]}
    */
   #addPlayers(playersList) {
     return playersList.map((player) => new Player(player.name, player.color));
@@ -67,5 +50,7 @@ export default class Board {
     ]);
     this.#renderPlayers();
     console.log(this.#players);
+    console.log(this.#fields);
+
   }
 }

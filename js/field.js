@@ -12,6 +12,25 @@ export default class Field {
     this.#fieldName = name;
     this.#value = value;
     this.#eventOnField = eventOnField;
+
+    const fieldDiv = document.createElement("DIV");
+    fieldDiv.style.border = "1px solid black";
+    fieldDiv.style.display = "flex";
+    fieldDiv.style.flexDirection = "column";
+    fieldDiv.style.justifyContent = "space-around";
+    fieldDiv.style.alignItems = "center";
+    fieldDiv.style.height = "7rem";
+    fieldDiv.style.width = "5rem";
+
+    const valueElement = document.createElement("SPAN");
+    const nameElement = document.createElement("SPAN");
+    const playerElement = document.createElement("DIV");
+    valueElement.textContent = `${value} $`;
+    nameElement.textContent = `${name}`;
+    nameElement.style.display = "flex";
+
+    fieldDiv.append(nameElement, playerElement, valueElement);
+    this.#domElement = fieldDiv;
   }
 
   get fieldName() {
@@ -30,7 +49,7 @@ export default class Field {
     this.#owner = newOwner;
   }
 
-
-
-
+  get domElement() {
+    return this.#domElement;
+  }
 }
