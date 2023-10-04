@@ -11,17 +11,22 @@ export default class Board {
   #diceRolled;
   #currentPlayerIndex;
 
+  get domElement() {
+    return this.#domElement
+  }
   #initBoard() {
+    this.#fields = fields.map(
+      (field) => new Field(field.name, field.value, field.eventFn),
+    );
+
+
+
     const boardDIV = document.createElement("DIV");
     boardDIV.id = "board";
     boardDIV.style.height = "70rem";
     boardDIV.style.width = "50rem";
     boardDIV.style.margin = "auto 5em";
-    document.body.append(boardDIV);
     // fill fields array with field html objects
-    this.#fields = fields.map(
-      (field) => new Field(field.name, field.value, field.eventFn),
-    );
 
     /*
      * ezt még át kell gondolni, griddel bombabiztosabb lenne
@@ -109,7 +114,6 @@ export default class Board {
       { name: "Kakadu Petike", color: "orange" },
     ]);
     this.#renderPlayers();
-    console.log(this.#fields)
     await this.#gameplayLoop();
     console.log("gameplay loop end");
   }
@@ -154,10 +158,13 @@ export default class Board {
 
     // update dom state
     this.#renderPlayers();
+    console.log("event start:", this.#players, this.#fields);
+
     // field info given to player method to take a buy/draw/pay tax etc
     const activePlayer = this.#players[this.#currentPlayerIndex];
     const activePlayerField = this.#fields[activePlayer.currentField];
     await activePlayer.decide(activePlayerField);
+    console.log("event end:", this.#players, this.#fields);
 
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {
@@ -165,6 +172,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
+
     return this.#gameplayLoop();
   }
 }
