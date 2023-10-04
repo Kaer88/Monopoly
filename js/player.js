@@ -1,5 +1,5 @@
 export default class Player {
-  #balance = 5000;
+  #balance = 1500;
   #isInJail = false;
   #currentField = 0;
   #name;

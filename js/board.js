@@ -114,15 +114,20 @@ export default class Board {
     this.#players = this.#addPlayers([
       { name: "Sanyi", color: "red" },
       { name: "Petike", color: "orange" },
-      { name: "Gerzsonka", color: "blue" },
+
     ]);
     this.#renderPlayers();
+    ScoreBoard.instance.updatePlayerState(this.#players)
+
     await this.#gameplayLoop();
     console.log("gameplay loop end");
   }
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
+    ScoreBoard.instance.newMessage(
+      `Current player: ${this.#players[this.#currentPlayerIndex].name}. Please roll the dice`,
+    );
 
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
@@ -136,7 +141,7 @@ export default class Board {
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
     });
-    ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`)
+    ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
 
     // set player position on field according to the dice value
 
@@ -162,14 +167,15 @@ export default class Board {
 
     // update dom state
     this.#renderPlayers();
-    console.log("event start:", this.#players, this.#fields);
 
     // field info given to player method to take a buy/draw/pay tax etc
     const activePlayer = this.#players[this.#currentPlayerIndex];
     const activePlayerField = this.#fields[activePlayer.currentField];
+
+    console.log("event start:", this.#players, this.#fields);
     await activePlayer.decide(activePlayerField);
     console.log("event end:", this.#players, this.#fields);
-    ScoreBoard.instance
+
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {
       this.#currentPlayerIndex = 0;
