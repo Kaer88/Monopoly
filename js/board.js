@@ -39,8 +39,6 @@ export default class Board {
     right.style.border = "1px solid black";
     right.style.height = "7rem";
     right.style.width = "40rem";
-    right.style.transform =
-      "rotate(90deg) translateY(-26.5rem) translateX(16.5rem)";
     right.style.display = "flex";
 
     const left = document.createElement("DIV");
@@ -48,17 +46,21 @@ export default class Board {
     left.style.border = "1px solid black";
     left.style.height = "7rem";
     left.style.width = "40rem";
-    left.style.transform =
-      "rotate(90deg) translateY(16.5rem) translateX(9.4rem)";
     left.style.display = "flex";
 
     const bottom = document.createElement("DIV");
     bottom.id = "right";
     bottom.style.border = "1px solid black";
     bottom.style.height = "7rem";
-    bottom.style.transform = "translateY(25.9rem)";
     bottom.style.display = "flex";
     bottom.style.flexDirection = "reverse";
+
+    // rotate lanes with transform
+    right.style.transform =
+      "rotate(90deg) translateY(-26.5rem) translateX(16.5rem)";
+    left.style.transform =
+      "rotate(-90deg) translateY(-16.5rem) translateX(-9.4rem)";
+    bottom.style.transform = "translateY(25.9rem) rotate(180deg)";
 
     boardDIV.append(top);
     boardDIV.append(right);
