@@ -17,6 +17,9 @@ export default class Player {
     this.#createDomElement(color);
   }
 
+  get name() {
+    return this.#name;
+  }
   get balance() {
     return this.#balance;
   }
@@ -50,8 +53,6 @@ export default class Player {
   }
 
   async decide(fieldInfo) {
-    console.log(fieldInfo)
-    return await fieldInfo.eventOnField(this)
-
+    return fieldInfo.eventOnField(this);
   }
 }

@@ -56,7 +56,7 @@ export default class Field {
     this.#owner = newOwner;
   }
 
-  eventOnField(player) {
+  async eventOnField(player) {
     return this.#eventOnField(player, this);
   }
 

@@ -1,4 +1,8 @@
+export async function propertyEvent(player, field) {
+  field.owner = player.name;
+  await new Promise((resolve) => {
+  resolve()
+  });
 
-export function propertyEvent(player, field) {
-  console.log(player, field)
+
 }
