@@ -8,7 +8,7 @@
  *
  *
  */
-import {propertyEvent} from "./events.js";
+import {propertyEvent} from "../events.js";
 
 export const fields = [
   {
