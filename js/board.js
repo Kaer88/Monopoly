@@ -182,7 +182,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-
+    ScoreBoard.instance.updatePlayerState(this.#players)
     return this.#gameplayLoop();
   }
 }
