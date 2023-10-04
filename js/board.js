@@ -1,16 +1,15 @@
 import { fields } from "./constants/fields.js";
-import Field from "./field.js";
+import Field from "./Field.js";
 import Player from "./player.js";
 import DiceControls from "./controls.js";
 import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 export default class Board {
   #fields = [];
-  #fieldsDom
   #players;
   #domElement;
   #diceRolled;
-  #currentPlayer;
+  #currentPlayerIndex;
 
   #initBoard() {
     const boardDIV = document.createElement("DIV");
@@ -20,7 +19,9 @@ export default class Board {
     boardDIV.style.margin = "auto 5em";
     document.body.append(boardDIV);
     // fill fields array with field html objects
-    this.#fields = fields.map((field) => new Field(field.name, field.value, field.eventFn))
+    this.#fields = fields.map(
+      (field) => new Field(field.name, field.value, field.eventFn),
+    );
 
     /*
      * ezt még át kell gondolni, griddel bombabiztosabb lenne
@@ -67,9 +68,15 @@ export default class Board {
     this.#domElement = boardDIV;
 
     this.#fields.slice(0, 11).forEach((field) => top.append(field.domElement));
-    this.#fields.slice(11, 20).forEach((field) => right.append(field.domElement));
-    this.#fields.slice(20, 31).forEach((field) => bottom.append(field.domElement));
-    this.#fields.slice(31, 40).forEach((field) => left.append(field.domElement));
+    this.#fields
+      .slice(11, 20)
+      .forEach((field) => right.append(field.domElement));
+    this.#fields
+      .slice(20, 31)
+      .forEach((field) => bottom.append(field.domElement));
+    this.#fields
+      .slice(31, 40)
+      .forEach((field) => left.append(field.domElement));
 
     // this.#fields.forEach((field) => boardDIV.append(field));
   }
@@ -85,12 +92,14 @@ export default class Board {
   #renderPlayers() {
     this.#players.forEach((player) => {
       player.domElement.parentElement !== null && player.domElement.remove();
-      this.#fields[player.currentField].domElement.children[1].append(player.domElement);
+      this.#fields[player.currentField].domElement.children[1].append(
+        player.domElement,
+      );
     });
   }
   async start() {
     this.#initBoard();
-    this.#currentPlayer = 0;
+    this.#currentPlayerIndex = 0;
     const diceControl = new DiceControls();
     diceControl.initControls();
 
@@ -100,12 +109,14 @@ export default class Board {
       { name: "Kakadu Petike", color: "orange" },
     ]);
     this.#renderPlayers();
+    console.log(this.#fields)
     await this.#gameplayLoop();
     console.log("gameplay loop end");
   }
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
+
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
@@ -119,34 +130,40 @@ export default class Board {
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
     });
-    // Dobott érték alapján mező beállítása az adott playeren
+    // set player position on field according to the dice value
+
     setNextField(
       this.#players,
-      this.#currentPlayer,
+      this.#currentPlayerIndex,
       this.#diceRolled,
       this.#fields,
     );
 
-    // const currentPlayerPosition =
-    //   this.#players[this.#currentPlayer].currentField;
+    // const currentPlayerIndexPosition =
+    //   this.#players[this.#currentPlayerIndex].currentField;
     // const diceValue = this.#diceRolled.reduce((acc, curr) => (acc += curr));
     // let targetField;
-    // if (diceValue + currentPlayerPosition > 37) {
+    // if (diceValue + currentPlayerIndexPosition > 37) {
     //   targetField = Math.abs(
-    //     currentPlayerPosition + diceValue - this.#fields.length,
+    //     currentPlayerIndexPosition + diceValue - this.#fields.length,
     //   );
     // } else {
-    //   targetField = currentPlayerPosition + diceValue;
+    //   targetField = currentPlayerIndexPosition + diceValue;
     // }
-    // this.#players[this.#currentPlayer].movePlayer(targetField);
+    // this.#players[this.#currentPlayerIndex].movePlayer(targetField);
 
+    // update dom state
     this.#renderPlayers();
+    // field info given to player method to take a buy/draw/pay tax etc
+    const activePlayer = this.#players[this.#currentPlayerIndex];
+    const activePlayerField = this.#fields[activePlayer.currentField];
+    await activePlayer.decide(activePlayerField);
 
-    // következő játékos beállítása
-    if (this.#currentPlayer === this.#players.length - 1) {
-      this.#currentPlayer = 0;
+    // set next player
+    if (this.#currentPlayerIndex === this.#players.length - 1) {
+      this.#currentPlayerIndex = 0;
     } else {
-      this.#currentPlayer = ++this.#currentPlayer;
+      this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
     return this.#gameplayLoop();
   }

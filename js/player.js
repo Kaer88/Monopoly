@@ -1,9 +1,10 @@
 export default class Player {
-  #balance = 0;
+  #balance = 5000;
   #isInJail = false;
   #currentField = 0;
   #name;
   #domElement;
+  #color;
 
   /**
    *
@@ -12,6 +13,7 @@ export default class Player {
    */
   constructor(name, color) {
     this.#name = name;
+    this.#color = color;
     this.#createDomElement(color);
   }
 
@@ -43,7 +45,13 @@ export default class Player {
     this.#domElement = document.createElement("DIV");
     this.#domElement.style.backgroundColor = color;
     this.#domElement.style.borderRadius = "50%";
-    this.#domElement.style.height = '1em'
-    this.#domElement.style.width = '1em'
+    this.#domElement.style.height = "1em";
+    this.#domElement.style.width = "1em";
+  }
+
+  async decide(fieldInfo) {
+    console.log(fieldInfo)
+    return await fieldInfo.eventOnField(this)
+
   }
 }

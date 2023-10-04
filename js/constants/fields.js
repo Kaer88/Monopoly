@@ -1,3 +1,15 @@
+/**
+ * property eventFn
+ * tax eventFn
+ * 1-es kártya eventFn
+ * 2-es kártya eventFn
+ * go to jail eventFn
+ * no eventFn
+ *
+ *
+ */
+import {propertyEvent} from "./events.js";
+
 export const fields = [
   {
     name: "GO",
@@ -7,7 +19,7 @@ export const fields = [
   {
     name: "VINE STREET",
     value: 15,
-    eventFn: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Community chest",
@@ -17,7 +29,7 @@ export const fields = [
   {
     name: "Coventry street",
     value: 57,
-    eventFn: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Income tax",
@@ -27,12 +39,12 @@ export const fields = [
   {
     name: "Marylebone station",
     value: 500,
-    eventFn: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Leicester square",
     value: 68,
-    eventFn: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Chance",
@@ -42,161 +54,161 @@ export const fields = [
   {
     name: "Bow street",
     value: 81,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Whitechapel road",
     value: 81,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Jail",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "The angel islington",
     value: 91,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Electric company",
     value: 1240,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Trafalgar square",
     value: 97,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Northumrld avenue",
     value: 112,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Fenchurch st. Station",
     value: 700,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Mborough Street",
     value: 125,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Community chest",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Fleet street",
     value: 148,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Old kent road",
     value: 208,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Parking lot",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Whitehall",
     value: 211,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Chance",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: () => {},
   },
   {
     name: "Pentonville Road",
     value: 215,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Pall Mall",
     value: 228,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "King Cross station",
     value: 1000,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Bond street",
     value: 271,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Strand",
     value: 320,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Waterwork",
     value: 3000,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Regent street",
     value: 370,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Go to Jail",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Euston road",
     value: 404,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Piccadilly",
     value: 440,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Community chest",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Oxford street",
     value: 550,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Liverpool station",
     value: 1500,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Chance",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Park Lane",
     value: 562,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
   {
     name: "Super tax",
     value: 0,
-    event: (targetPlayer) => {},
+    eventFn: (targetPlayer) => {},
   },
   {
     name: "Mayfair",
     value: 1800,
-    event: (targetPlayer) => {},
+    eventFn: propertyEvent,
   },
 ];

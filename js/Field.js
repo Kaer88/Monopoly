@@ -27,7 +27,7 @@ export default class Field {
     fieldDiv.style.alignItems = "center";
     fieldDiv.style.height = "7rem";
     fieldDiv.style.width = "5rem";
-    fieldDiv.style.margin = "0rem"
+    fieldDiv.style.margin = "0rem";
 
     const valueElement = document.createElement("SPAN");
     const nameElement = document.createElement("SPAN");
@@ -54,6 +54,10 @@ export default class Field {
 
   set owner(newOwner) {
     this.#owner = newOwner;
+  }
+
+  eventOnField(player) {
+    return this.#eventOnField(player, this);
   }
 
   get domElement() {
