@@ -6,6 +6,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 export default class Board {
   #fields = [];
+  #fieldsDom
   #players;
   #domElement;
   #diceRolled;
@@ -19,11 +20,7 @@ export default class Board {
     boardDIV.style.margin = "auto 5em";
     document.body.append(boardDIV);
     // fill fields array with field html objects
-    this.#fields = fields
-      .map((field) => new Field(field.name, field.value, field.eventFn))
-      .map((fieldOfClass) => {
-        return fieldOfClass.domElement;
-      });
+    this.#fields = fields.map((field) => new Field(field.name, field.value, field.eventFn))
 
     /*
      * ezt még át kell gondolni, griddel bombabiztosabb lenne
@@ -69,10 +66,10 @@ export default class Board {
 
     this.#domElement = boardDIV;
 
-    this.#fields.slice(0, 11).forEach((field) => top.append(field));
-    this.#fields.slice(11, 20).forEach((field) => right.append(field));
-    this.#fields.slice(20, 31).forEach((field) => bottom.append(field));
-    this.#fields.slice(31, 40).forEach((field) => left.append(field));
+    this.#fields.slice(0, 11).forEach((field) => top.append(field.domElement));
+    this.#fields.slice(11, 20).forEach((field) => right.append(field.domElement));
+    this.#fields.slice(20, 31).forEach((field) => bottom.append(field.domElement));
+    this.#fields.slice(31, 40).forEach((field) => left.append(field.domElement));
 
     // this.#fields.forEach((field) => boardDIV.append(field));
   }
@@ -88,7 +85,7 @@ export default class Board {
   #renderPlayers() {
     this.#players.forEach((player) => {
       player.domElement.parentElement !== null && player.domElement.remove();
-      this.#fields[player.currentField].children[1].append(player.domElement);
+      this.#fields[player.currentField].domElement.children[1].append(player.domElement);
     });
   }
   async start() {
