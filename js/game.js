@@ -1,4 +1,5 @@
 import Board from "./board.js";
+import ScoreBoard from "./scoreBoard.js";
 
 class Game {
   #board;
@@ -9,17 +10,18 @@ class Game {
     this.#board = new Board();
   }
 
-   async init() {
+  async init() {
     // this is the fn why this is async, awaiting causes no dom element render
-    this.#board.start();
     const gameParentElement = document.createElement("DIV");
     gameParentElement.style.display = "flex";
-    gameParentElement.id = "game";
-    gameParentElement.append(this.#board.domElement);
+    gameParentElement.id = "game-container";
+    this.#domElement = gameParentElement;
     document.body.append(gameParentElement);
-
+    // this.#scoreBoard.createDomElement();
+    this.#board.start();
+    gameParentElement.append(this.#board.domElement, ScoreBoard.instance.domElement);
   }
 }
 
 const game = new Game();
-await game.init()
+await game.init();

@@ -4,6 +4,7 @@ import Player from "./player.js";
 import DiceControls from "./controls.js";
 import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
+import ScoreBoard from "./scoreBoard.js";
 export default class Board {
   #fields = [];
   #players;
@@ -11,15 +12,16 @@ export default class Board {
   #diceRolled;
   #currentPlayerIndex;
 
+  get players() {
+    return this.#players;
+  }
   get domElement() {
-    return this.#domElement
+    return this.#domElement;
   }
   #initBoard() {
     this.#fields = fields.map(
       (field) => new Field(field.name, field.value, field.eventFn),
     );
-
-
 
     const boardDIV = document.createElement("DIV");
     boardDIV.id = "board";
@@ -111,7 +113,8 @@ export default class Board {
     document.body.append(diceControl.domElement);
     this.#players = this.#addPlayers([
       { name: "Sanyi", color: "red" },
-      { name: "Kakadu Petike", color: "orange" },
+      { name: "Petike", color: "orange" },
+      { name: "Gerzsonka", color: "blue" },
     ]);
     this.#renderPlayers();
     await this.#gameplayLoop();
@@ -127,13 +130,14 @@ export default class Board {
         document
           .querySelector("#roll-btn")
           .removeEventListener("click", rollBtnHandler);
-        console.log(this.#diceRolled);
         resolve();
       };
       document
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
     });
+    ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`)
+
     // set player position on field according to the dice value
 
     setNextField(
@@ -165,7 +169,7 @@ export default class Board {
     const activePlayerField = this.#fields[activePlayer.currentField];
     await activePlayer.decide(activePlayerField);
     console.log("event end:", this.#players, this.#fields);
-
+    ScoreBoard.instance
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {
       this.#currentPlayerIndex = 0;
