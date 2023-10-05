@@ -1,4 +1,4 @@
-export default class DiceControls {
+export default class Controls {
   #domElement;
 
   constructor() {}
@@ -8,15 +8,20 @@ export default class DiceControls {
     const rollButton = document.createElement("BUTTON");
     rollButton.textContent = "Roll the dice!";
     rollButton.id = "roll-btn"
-    buttonContainer.append(rollButton);
+    buttonContainer.style.height = "10em"
+    buttonContainer.style.width = "10em"
 
-    buttonContainer.style.position = "absolute";
-    buttonContainer.style.right = "5px";
-    buttonContainer.style.top = "5px";
+    const buyButton = document.createElement('BUTTON');
+    buyButton.id = "buy-btn"
+    buyButton.textContent = "BUY"
+    const passButton = document.createElement('BUTTON')
+    passButton.id = "pass-btn"
+    passButton.textContent = "PASS"
 
-    buttonContainer.height = "10em";
-    buttonContainer.width = "10em";
-    buttonContainer.border = "1px solid black";
+
+    buttonContainer.append(rollButton, buyButton, passButton);
+
+
 
     this.#domElement = buttonContainer;
   }

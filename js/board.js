@@ -107,10 +107,7 @@ export default class Board {
   async start() {
     this.#initBoard();
     this.#currentPlayerIndex = 0;
-    const diceControl = new DiceControls();
-    diceControl.initControls();
 
-    document.body.append(diceControl.domElement);
     this.#players = this.#addPlayers([
       { name: "Sanyi", color: "red" },
       { name: "Petike", color: "orange" },
@@ -171,6 +168,7 @@ export default class Board {
     // field info given to player method to take a buy/draw/pay tax etc
     const activePlayer = this.#players[this.#currentPlayerIndex];
     const activePlayerField = this.#fields[activePlayer.currentField];
+    ScoreBoard.instance.newMessage(`${activePlayer.name} arrived at ${activePlayerField.fieldName}, make a move`);
 
     console.log("event start:", this.#players, this.#fields);
     await activePlayer.decide(activePlayerField);

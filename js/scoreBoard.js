@@ -15,8 +15,7 @@ export default class ScoreBoard {
 
         const messageBox = document.createElement("DIV");
         messageBox.style.overflowY = "scroll";
-        messageBox.style.height = "30vh";
-        messageBox.style.borderBottom = "1px solid black";
+        messageBox.style.height = '45vh';
 
         const playerInfo = document.createElement("DIV");
         playerInfo.style.height = "15vh";
@@ -24,10 +23,8 @@ export default class ScoreBoard {
         playerInfo.style.grid = "1fr 1fr 1fr";
         playerInfo.style.borderBottom = "1px solid black";
 
-        const buttonContainer = document.createElement("DIV");
 
-        buttonContainer.id = "btn-container";
-        scoreBoardContainer.append(playerInfo, messageBox, buttonContainer);
+        scoreBoardContainer.append(playerInfo, messageBox);
         domElement = scoreBoardContainer;
       })();
     }
