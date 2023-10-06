@@ -2,11 +2,12 @@ export default class Field {
   #eventOnField; // property event, card event, jail event
   #fieldName;
   #value;
-  #owner = null;
+  #owner;
   #domElement;
   #color;
   #nrOfHouses;
   #basePenalty;
+  #baseHousePrice;
 
   /**
    *
@@ -32,12 +33,27 @@ export default class Field {
     const valueElement = document.createElement("SPAN");
     const nameElement = document.createElement("SPAN");
     const playerElement = document.createElement("DIV");
+    const ownerElement = document.createElement("DIV");
+
     valueElement.textContent = `${value} $`;
     nameElement.textContent = `${name}`;
-    nameElement.style.display = "flex";
+    playerElement.style.display = "flex";
+    ownerElement.style.height = "1em"
+    ownerElement.style.width = "100%"
 
-    fieldDiv.append(nameElement, playerElement, valueElement);
+
+    fieldDiv.append(nameElement, playerElement, valueElement, ownerElement);
     this.#domElement = fieldDiv;
+  }
+
+  /**
+   *
+   * @param player {Player}
+   */
+  #setOwnerColor(player) {
+    console.log(this.#domElement.children[3])
+    console.log(player.color)
+    this.#domElement.children[3].style.backgroundColor = player.color;
   }
 
   get fieldName() {
@@ -52,8 +68,13 @@ export default class Field {
     return this.#owner;
   }
 
-  set owner(newOwner) {
+  /**
+   *
+   * @param newOwner {Player}
+   */
+  setOwner(newOwner) {
     this.#owner = newOwner;
+    this.#setOwnerColor(newOwner);
   }
 
   async eventOnField(player) {

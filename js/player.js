@@ -37,6 +37,10 @@ export default class Player {
     return this.#currentField;
   }
 
+  get color() {
+    return this.#color;
+  }
+
   get domElement() {
     return this.#domElement;
   }
