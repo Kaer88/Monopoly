@@ -1,7 +1,6 @@
 import { fields } from "./constants/fields.js";
 import Field from "./Field.js";
 import Player from "./player.js";
-import DiceControls from "./controls.js";
 import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./scoreBoard.js";
@@ -20,7 +19,14 @@ export default class Board {
   }
   #initBoard() {
     this.#fields = fields.map(
-      (field) => new Field(field.name, field.value, field.eventFn),
+      (field) =>
+        new Field(
+          field.name,
+          field.value,
+          field.eventFn,
+          field.penalties,
+          field.buildPrice,
+        ),
     );
 
     const boardDIV = document.createElement("DIV");
@@ -111,10 +117,9 @@ export default class Board {
     this.#players = this.#addPlayers([
       { name: "Sanyi", color: "red" },
       { name: "Petike", color: "orange" },
-
     ]);
     this.#renderPlayers();
-    ScoreBoard.instance.updatePlayerState(this.#players)
+    ScoreBoard.instance.updatePlayerState(this.#players);
 
     await this.#gameplayLoop();
     console.log("gameplay loop end");
@@ -123,17 +128,22 @@ export default class Board {
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
     ScoreBoard.instance.newMessage(
-      `Current player: ${this.#players[this.#currentPlayerIndex].name}. Please roll the dice`,
+      `Current player: ${
+        this.#players[this.#currentPlayerIndex].name
+      }. Please roll the dice`,
     );
 
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
         document
+          .querySelector("#roll-btn").disabled = true
+        document
           .querySelector("#roll-btn")
           .removeEventListener("click", rollBtnHandler);
         resolve();
       };
+      document.querySelector("#roll-btn").disabled = false;
       document
         .querySelector("#roll-btn")
         .addEventListener("click", rollBtnHandler);
@@ -168,7 +178,9 @@ export default class Board {
     // field info given to player method to take a buy/draw/pay tax etc
     const activePlayer = this.#players[this.#currentPlayerIndex];
     const activePlayerField = this.#fields[activePlayer.currentField];
-    ScoreBoard.instance.newMessage(`${activePlayer.name} arrived at ${activePlayerField.fieldName}, make a move`);
+    ScoreBoard.instance.newMessage(
+      `${activePlayer.name} arrived at ${activePlayerField.fieldName}, make a move`,
+    );
 
     console.log("event start:", this.#players, this.#fields);
     await activePlayer.decide(activePlayerField);
@@ -180,7 +192,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-    ScoreBoard.instance.updatePlayerState(this.#players)
+    ScoreBoard.instance.updatePlayerState(this.#players);
     return this.#gameplayLoop();
   }
 }

@@ -5,20 +5,25 @@ export default class Field {
   #owner;
   #domElement;
   #color;
-  #nrOfHouses;
-  #basePenalty;
-  #baseHousePrice;
+  #propertyGroupId;
+  #nrOfHousesBuilt = 0;
+  #penalties;
+  #buildPrice;
 
   /**
-   *
    * @param name {string}
    * @param value {number}
    * @param eventOnField {function}
+   * @param penalties {Number[]}
+   * @param buildPrice {Number}
+   *
    */
-  constructor(name, value, eventOnField) {
+  constructor(name, value, eventOnField, penalties, buildPrice) {
     this.#fieldName = name;
     this.#value = value;
     this.#eventOnField = eventOnField;
+    this.#penalties = penalties;
+    this.#buildPrice = buildPrice;
 
     const fieldDiv = document.createElement("DIV");
     fieldDiv.style.border = "1px solid black";
@@ -38,9 +43,8 @@ export default class Field {
     valueElement.textContent = `${value} $`;
     nameElement.textContent = `${name}`;
     playerElement.style.display = "flex";
-    ownerElement.style.height = "1em"
-    ownerElement.style.width = "100%"
-
+    ownerElement.style.height = "1em";
+    ownerElement.style.width = "100%";
 
     fieldDiv.append(nameElement, playerElement, valueElement, ownerElement);
     this.#domElement = fieldDiv;
@@ -51,8 +55,8 @@ export default class Field {
    * @param player {Player}
    */
   #setOwnerColor(player) {
-    console.log(this.#domElement.children[3])
-    console.log(player.color)
+    console.log(this.#domElement.children[3]);
+    console.log(player.color);
     this.#domElement.children[3].style.backgroundColor = player.color;
   }
 
@@ -77,6 +81,9 @@ export default class Field {
     this.#setOwnerColor(newOwner);
   }
 
+  getPenalty() {
+    return this.#penalties[this.#nrOfHousesBuilt]
+  }
   async eventOnField(player) {
     return this.#eventOnField(player, this);
   }
