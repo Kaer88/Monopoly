@@ -43,9 +43,11 @@ export default class Board {
     `;
     const middleContainer = document.createElement("DIV");
     middleContainer.style.gridArea = "middle";
-    middleContainer.style.display = "flex"
-    middleContainer.style.padding = "1rem"
-    middleContainer.prepend(controls.domElement)
+    middleContainer.style.display = "flex";
+    middleContainer.style.alignItems = "center"
+    middleContainer.style.justifyContent = "space-around"
+    middleContainer.style.padding = "1rem";
+    middleContainer.prepend(controls.domElement);
 
     // fill fieldTemplate array with field html objects
 
@@ -59,7 +61,7 @@ export default class Board {
     right.style.display = "flex";
     right.style.gridArea = "right";
     right.style.flexDirection = "column";
-    right.style.alignItems = "flex-end"
+    right.style.alignItems = "flex-end";
 
     const left = document.createElement("DIV");
     left.id = "right";
@@ -72,7 +74,6 @@ export default class Board {
     bottom.style.display = "flex";
     bottom.style.flexDirection = "row-reverse";
     bottom.style.gridArea = "bottom";
-
 
     boardDIV.append(middleContainer, top, right, left, bottom);
 
@@ -88,7 +89,6 @@ export default class Board {
     this.#fields
       .slice(31, 40)
       .forEach((field) => left.append(field.domElement));
-
   }
 
   /**
@@ -116,7 +116,10 @@ export default class Board {
       { name: "Petike", color: "orange" },
     ]);
     this.#renderPlayers();
-    ScoreBoard.instance.updatePlayerState(this.#players, this.#currentPlayerIndex);
+    ScoreBoard.instance.updatePlayerState(
+      this.#players,
+      this.#currentPlayerIndex,
+    );
 
     await this.#gameplayLoop();
     console.log("gameplay loop end");
@@ -125,9 +128,9 @@ export default class Board {
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
     ScoreBoard.instance.newMessage(
-      `Current player: ${
+      `${
         this.#players[this.#currentPlayerIndex].name
-      }. Please roll the dice`,
+      }. roll the dice`,
     );
 
     await new Promise((resolve) => {
@@ -145,8 +148,7 @@ export default class Board {
           .querySelector("#roll-btn")
           .addEventListener("click", rollBtnHandler);
       }, 0);
-
-      })
+    });
 
     ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
 
@@ -179,7 +181,7 @@ export default class Board {
     const activePlayer = this.#players[this.#currentPlayerIndex];
     const activePlayerField = this.#fields[activePlayer.currentField];
     ScoreBoard.instance.newMessage(
-      `${activePlayer.name} arrived at ${activePlayerField.fieldName}, make a move`,
+      `${activePlayer.name} arrived at ${activePlayerField.fieldName}`,
     );
 
     console.log("event start:", this.#players, this.#fields);
@@ -192,7 +194,10 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-    ScoreBoard.instance.updatePlayerState(this.#players, this.#currentPlayerIndex);
+    ScoreBoard.instance.updatePlayerState(
+      this.#players,
+      this.#currentPlayerIndex,
+    );
     return this.#gameplayLoop();
   }
 }

@@ -14,7 +14,8 @@ export default class ScoreBoard {
 
         const messageBox = document.createElement("DIV");
         messageBox.style.overflowY = "scroll";
-        messageBox.style.height = '45vh';
+        messageBox.style.height = '44.7vh';
+        messageBox.style.paddingLeft = "0.5em"
 
         const playerInfo = document.createElement("DIV");
         playerInfo.style.height = "15vh";
@@ -67,6 +68,8 @@ export default class ScoreBoard {
    */
   newMessage(message) {
     const newP = document.createElement("P");
+    newP.style.listStyle = "disc"
+
     newP.textContent = `${message}`;
     domElement.children[1].prepend(newP);
   }

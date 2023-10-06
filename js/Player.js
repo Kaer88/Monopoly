@@ -5,6 +5,7 @@ export default class Player {
   #name;
   #domElement;
   #color;
+  #properties = [];
 
   /**
    *
@@ -39,6 +40,10 @@ export default class Player {
 
   get color() {
     return this.#color;
+  }
+
+  get properties() {
+    return this.#properties;
   }
 
   get domElement() {
