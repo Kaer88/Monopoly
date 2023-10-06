@@ -34,6 +34,8 @@ export default class Field {
     fieldDiv.style.height = "4.3rem";
     fieldDiv.style.width = "8rem";
     fieldDiv.style.margin = "0rem";
+    fieldDiv.style.position = "relative"
+    fieldDiv.style.overflow = "hidden"
 
     const valueElement = document.createElement("SPAN");
     const nameElement = document.createElement("SPAN");
@@ -43,8 +45,13 @@ export default class Field {
     valueElement.textContent = `${value} $`;
     nameElement.textContent = `${name}`;
     playerElement.style.display = "flex";
-    ownerElement.style.height = "0.5em";
-    ownerElement.style.width = "100%";
+    ownerElement.style.height = "3em";
+    ownerElement.style.width = "3em";
+    ownerElement.style.position = "absolute"
+    ownerElement.style.borderRadius = "50%"
+    ownerElement.style.right = "-23px"
+    ownerElement.style.bottom = "-23px"
+
 
     fieldDiv.append(nameElement, playerElement, valueElement, ownerElement);
     this.#domElement = fieldDiv;

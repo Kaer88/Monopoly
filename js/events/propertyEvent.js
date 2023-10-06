@@ -1,4 +1,4 @@
-import ScoreBoard from "../scoreBoard.js";
+import ScoreBoard from "../ScoreBoard.js";
 
 export async function propertyEvent(player, field) {
   if (field.owner === undefined) {

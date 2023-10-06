@@ -10,7 +10,7 @@
  */
 import {propertyEvent} from "../events/propertyEvent.js";
 
-export const fields = [
+export const fieldTemplate = [
   {
     name: "GO",
     value: 0,
@@ -19,7 +19,7 @@ export const fields = [
     buildPrice: 0,
   },
   {
-    name: "VINE STREET",
+    name: "Old Kent Road",
     value: 60,
     eventFn: propertyEvent,
     penalties: [2, 10, 20, 90, 160, 250],
@@ -31,7 +31,7 @@ export const fields = [
     eventFn: (targetPlayer) => {},
   },
   {
-    name: "Coventry street",
+    name: "Whitechapel Road",
     value: 60,
     eventFn: propertyEvent,
     penalties: [2, 10, 20, 90, 160, 250 ],

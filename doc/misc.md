@@ -172,7 +172,7 @@ see [MSDN](https://docs.microsoft.com/previous-versions/windows/internet-explore
 
 `package.json` is used to define attributes of your site or application for
 use in modern JavaScript development. [The full documentation is available](https://docs.npmjs.com/files/package.json)
-if you're interested. The fields we provide are as follows:
+if you're interested. The fieldTemplate we provide are as follows:
 
 * `title` - the title of your project. If you expect to publish your application
   to npm, then the name needs to follow [certain guidelines](https://docs.npmjs.com/files/package.json#name)

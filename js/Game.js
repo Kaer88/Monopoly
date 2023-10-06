@@ -1,5 +1,5 @@
-import Board from "./board.js";
-import ScoreBoard from "./scoreBoard.js";
+import Board from "./Board.js";
+import ScoreBoard from "./ScoreBoard.js";
 
 class Game {
   #board;

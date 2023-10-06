@@ -93,7 +93,7 @@ to add more richness to the description of your site. This just represents the
 most basic implementation.
 
 To see a working example, the following is the open graph metadata for the HTML5
-Boilerplate site. In addition to the required fields we add `og:description` to
+Boilerplate site. In addition to the required fieldTemplate we add `og:description` to
 describe the site in more detail.
 
 ``` html

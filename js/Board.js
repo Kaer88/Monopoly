@@ -1,10 +1,10 @@
-import { fields } from "./constants/fields.js";
+import { fieldTemplate } from "./constants/fieldTemplate.js";
 import Field from "./Field.js";
-import Player from "./player.js";
+import Player from "./Player.js";
 import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
-import ScoreBoard from "./scoreBoard.js";
-import Controls from "./controls.js";
+import ScoreBoard from "./ScoreBoard.js";
+import Controls from "./Controls.js";
 export default class Board {
   #fields = [];
   #players;
@@ -19,7 +19,7 @@ export default class Board {
     return this.#domElement;
   }
   #initBoard() {
-    this.#fields = fields.map(
+    this.#fields = fieldTemplate.map(
       (field) =>
         new Field(
           field.name,
@@ -50,7 +50,7 @@ export default class Board {
     middleContainer.style.padding = "1rem"
     middleContainer.prepend(controls.domElement)
 
-    // fill fields array with field html objects
+    // fill fieldTemplate array with field html objects
 
     const top = document.createElement("DIV");
     top.id = "top";
@@ -168,7 +168,7 @@ export default class Board {
     // let targetField;
     // if (diceValue + currentPlayerIndexPosition > 37) {
     //   targetField = Math.abs(
-    //     currentPlayerIndexPosition + diceValue - this.#fields.length,
+    //     currentPlayerIndexPosition + diceValue - this.#fieldTemplate.length,
     //   );
     // } else {
     //   targetField = currentPlayerIndexPosition + diceValue;
