@@ -45,10 +45,11 @@ export default class ScoreBoard {
     targetElement.innerHTML = "";
     playerState.forEach((playerData, idx) => {
       const playerContainer = document.createElement("DIV");
-      playerContainer.style.display = "flex";
-      playerContainer.style.justifyContent = "space-around";
+      playerContainer.style.display = "grid";
+      playerContainer.style.gridTemplateColumns = "1fr 1fr 1fr"
       playerContainer.style.alignItems = "center";
-      playerContainer.style.border = idx === currentPlayerIndex ? '1px solid red' : ''
+      playerContainer.style.paddingLeft = "0.5em"
+      playerContainer.style.border = idx === currentPlayerIndex ? `3px solid ${playerData.color}` : ''
       const nameSpan = document.createElement("SPAN");
       const balanceSpan = document.createElement("SPAN");
       const isInJail = document.createElement("SPAN");

@@ -44,8 +44,8 @@ export default class Board {
     const middleContainer = document.createElement("DIV");
     middleContainer.style.gridArea = "middle";
     middleContainer.style.display = "flex";
-    middleContainer.style.alignItems = "center"
-    middleContainer.style.justifyContent = "space-around"
+    middleContainer.style.alignItems = "center";
+    middleContainer.style.justifyContent = "space-around";
     middleContainer.style.padding = "1rem";
     middleContainer.prepend(controls.domElement);
 
@@ -113,7 +113,9 @@ export default class Board {
 
     this.#players = this.#addPlayers([
       { name: "Sanyi", color: "red" },
-      { name: "Petike", color: "orange" },
+      { name: "Peti", color: "orange" },
+      { name: "Gerzson", color: "blue" },
+
     ]);
     this.#renderPlayers();
     ScoreBoard.instance.updatePlayerState(
@@ -128,9 +130,7 @@ export default class Board {
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
     ScoreBoard.instance.newMessage(
-      `${
-        this.#players[this.#currentPlayerIndex].name
-      }. roll the dice`,
+      `${this.#players[this.#currentPlayerIndex].name}. roll the dice`,
     );
 
     await new Promise((resolve) => {

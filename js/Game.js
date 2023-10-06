@@ -10,8 +10,7 @@ class Game {
     this.#board = new Board();
   }
 
-  async init() {
-    // this is the fn why this is async, awaiting causes no dom element render
+  init() {
     const gameParentElement = document.createElement("DIV");
     gameParentElement.style.display = "flex";
     gameParentElement.id = "game-container";

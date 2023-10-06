@@ -53,7 +53,8 @@ export default class Field {
     ownerElement.style.bottom = "-23px"
 
 
-    fieldDiv.append(nameElement, playerElement, valueElement, ownerElement);
+    fieldDiv.append(nameElement, playerElement, ownerElement);
+    value !== 0 && fieldDiv.append(valueElement);
     this.#domElement = fieldDiv;
   }
 
@@ -62,7 +63,7 @@ export default class Field {
    * @param player {Player}
    */
   #setOwnerColor(player) {
-    this.#domElement.children[3].style.backgroundColor = player.color;
+    this.#domElement.children[2].style.backgroundColor = player.color;
   }
 
   get fieldName() {

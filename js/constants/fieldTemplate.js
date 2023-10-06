@@ -142,7 +142,7 @@ export const fieldTemplate = [
   {
     name: "Parking lot",
     value: 0,
-    eventFn: propertyEvent,
+    eventFn: () => {},
   },
   {
     name: "Strand",
