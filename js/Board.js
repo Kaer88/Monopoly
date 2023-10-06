@@ -32,7 +32,7 @@ export default class Board {
 
     const boardDIV = document.createElement("DIV");
     boardDIV.id = "board";
-    boardDIV.style.margin = "1em 3em";
+    boardDIV.style.margin = "1em auto";
     boardDIV.style.display = "grid";
 
     boardDIV.style.gridTemplateAreas = `
@@ -55,6 +55,8 @@ export default class Board {
     top.id = "top";
     top.style.display = "flex";
     top.style.gridArea = "top";
+    top.style.height = "7rem"
+
 
     const right = document.createElement("DIV");
     right.id = "right";
@@ -74,6 +76,8 @@ export default class Board {
     bottom.style.display = "flex";
     bottom.style.flexDirection = "row-reverse";
     bottom.style.gridArea = "bottom";
+    bottom.style.height = "7rem"
+
 
     boardDIV.append(middleContainer, top, right, left, bottom);
 
@@ -115,7 +119,6 @@ export default class Board {
       { name: "Sanyi", color: "red" },
       { name: "Peti", color: "orange" },
       { name: "Gerzson", color: "blue" },
-
     ]);
     this.#renderPlayers();
     ScoreBoard.instance.updatePlayerState(
@@ -136,11 +139,12 @@ export default class Board {
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
+        ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
         document.querySelector("#roll-btn").disabled = true;
         document
           .querySelector("#roll-btn")
           .removeEventListener("click", rollBtnHandler);
-        resolve();
+        setTimeout(() => resolve(), 800);
       };
       setTimeout(() => {
         document.querySelector("#roll-btn").disabled = false;
@@ -150,7 +154,6 @@ export default class Board {
       }, 0);
     });
 
-    ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
 
     // set player position on field according to the dice value
 
@@ -183,10 +186,7 @@ export default class Board {
     ScoreBoard.instance.newMessage(
       `${activePlayer.name} arrived at ${activePlayerField.fieldName}`,
     );
-
-    console.log("event start:", this.#players, this.#fields);
     await activePlayer.decide(activePlayerField);
-    console.log("event end:", this.#players, this.#fields);
 
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {

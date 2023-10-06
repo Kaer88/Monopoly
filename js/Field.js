@@ -31,7 +31,7 @@ export default class Field {
     fieldDiv.style.flexDirection = "column";
     fieldDiv.style.justifyContent = "space-around";
     fieldDiv.style.alignItems = "center";
-    fieldDiv.style.height = "4.4rem";
+    fieldDiv.style.height = "100%";
     fieldDiv.style.width = "9rem";
     fieldDiv.style.margin = "0rem";
     fieldDiv.style.position = "relative"

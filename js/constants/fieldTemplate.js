@@ -235,7 +235,7 @@ export const fieldTemplate = [
   },
   {
     name: "Liverpool station",
-    value: 1500,
+    value: 200,
     eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
 
@@ -254,7 +254,7 @@ export const fieldTemplate = [
   },
   {
     name: "Super tax",
-    value: 0,
+    value: 200,
     eventFn: (targetPlayer) => {},
   },
   {
