@@ -40,22 +40,22 @@ export async function propertyEvent(player, field) {
   }
 
   if (field.owner !== player) {
+    const payablePenalty = field.getPenalty();
     ScoreBoard.instance.newMessage(
-      `${field.owner.name}'s land, ${player.name} must pay rent.`,
+      `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
     );
+
     return await new Promise((resolve) => {
       const payBtn = document.querySelector("#pay-btn");
       const payFn = () => {
-        const payablePenalty = field.getPenalty();
-        console.log(payablePenalty);
         player.balance -= payablePenalty;
         field.owner.balance += payablePenalty;
         payBtn.disabled = true;
         payBtn.removeEventListener("click", payFn);
         resolve();
       };
-      document.querySelector("#pay-btn").disabled = false;
-      document.querySelector("#pay-btn").addEventListener("click", payFn);
+      payBtn.disabled = false;
+      payBtn.addEventListener("click", payFn);
     });
   }
 }

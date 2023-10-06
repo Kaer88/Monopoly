@@ -50,7 +50,7 @@ export const fieldTemplate = [
     buildPrice: 50,
   },
   {
-    name: "The Angel, Islington",
+    name: "The Angel Islington",
     value: 100,
     eventFn: propertyEvent,
     penalties: [6, 30, 90, 270, 400, 500],
@@ -100,7 +100,7 @@ export const fieldTemplate = [
     buildPrice: 100,
   },
   {
-    name: "Northumberland Avenue",
+    name: "Northumberland Ave",
     value: 160,
     eventFn: propertyEvent,
     penalties: [12, 60, 180, 500, 700, 900],
@@ -126,7 +126,7 @@ export const fieldTemplate = [
     eventFn: (targetPlayer) => {},
   },
   {
-    name: "Marlborough Street",
+    name: "Marlborough St.",
     value: 180,
     eventFn: propertyEvent,
     penalties: [14, 70, 200, 550, 750, 950],
@@ -164,14 +164,14 @@ export const fieldTemplate = [
     buildPrice: 150,
   },
   {
-    name: "Trafalgar Square",
+    name: "Trafalgar Sq",
     value: 240,
     eventFn: propertyEvent,
     penalties: [20, 100, 300, 750, 925, 1100],
     buildPrice: 150,
   },
   {
-    name: "Fenchurch St Station",
+    name: "Fenchurch Station",
     value: 200,
     eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
@@ -191,7 +191,7 @@ export const fieldTemplate = [
     buildPrice: 150,
   },
   {
-    name: "Waterwork",
+    name: "Waterworks",
     value: 150,
     eventFn: propertyEvent,
   },

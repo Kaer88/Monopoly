@@ -10,11 +10,8 @@ export default class Board {
   #players;
   #domElement;
   #diceRolled;
-  #currentPlayerIndex;
+  #currentPlayerIndex = 0;
 
-  get players() {
-    return this.#players;
-  }
   get domElement() {
     return this.#domElement;
   }
@@ -119,7 +116,7 @@ export default class Board {
       { name: "Petike", color: "orange" },
     ]);
     this.#renderPlayers();
-    ScoreBoard.instance.updatePlayerState(this.#players);
+    ScoreBoard.instance.updatePlayerState(this.#players, this.#currentPlayerIndex);
 
     await this.#gameplayLoop();
     console.log("gameplay loop end");
@@ -195,7 +192,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-    ScoreBoard.instance.updatePlayerState(this.#players);
+    ScoreBoard.instance.updatePlayerState(this.#players, this.#currentPlayerIndex);
     return this.#gameplayLoop();
   }
 }

@@ -36,17 +36,18 @@ export default class ScoreBoard {
   /**
    *
    * @param playerState {Player[]}
+   * @param currentPlayerIndex{number}
    */
-  updatePlayerState(playerState) {
+  updatePlayerState(playerState, currentPlayerIndex) {
     const targetElement = domElement.children[0];
     // remove outdated elements
     targetElement.innerHTML = "";
-    playerState.forEach((playerData) => {
+    playerState.forEach((playerData, idx) => {
       const playerContainer = document.createElement("DIV");
       playerContainer.style.display = "flex";
       playerContainer.style.justifyContent = "space-around";
       playerContainer.style.alignItems = "center";
-
+      playerContainer.style.border = idx === currentPlayerIndex ? '1px solid red' : ''
       const nameSpan = document.createElement("SPAN");
       const balanceSpan = document.createElement("SPAN");
       const isInJail = document.createElement("SPAN");

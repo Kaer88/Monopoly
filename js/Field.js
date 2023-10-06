@@ -31,8 +31,8 @@ export default class Field {
     fieldDiv.style.flexDirection = "column";
     fieldDiv.style.justifyContent = "space-around";
     fieldDiv.style.alignItems = "center";
-    fieldDiv.style.height = "4.3rem";
-    fieldDiv.style.width = "8rem";
+    fieldDiv.style.height = "4.4rem";
+    fieldDiv.style.width = "9rem";
     fieldDiv.style.margin = "0rem";
     fieldDiv.style.position = "relative"
     fieldDiv.style.overflow = "hidden"
@@ -62,8 +62,6 @@ export default class Field {
    * @param player {Player}
    */
   #setOwnerColor(player) {
-    console.log(this.#domElement.children[3]);
-    console.log(player.color);
     this.#domElement.children[3].style.backgroundColor = player.color;
   }
 

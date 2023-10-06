@@ -6,7 +6,7 @@ export default class Controls {
   initControls() {
     const buttonContainer = document.createElement("DIV");
     buttonContainer.style.height = "5em";
-    buttonContainer.style.display = "flex"
+    buttonContainer.style.display = "flex";
 
     const rollButton = document.createElement("BUTTON");
     rollButton.textContent = "ROLL!";
@@ -15,12 +15,12 @@ export default class Controls {
 
     const buyButton = document.createElement("BUTTON");
     buyButton.id = "buy-btn";
-    buyButton.textContent = "BUY";
+    buyButton.textContent = "BUY!";
     buyButton.disabled = true;
 
     const passButton = document.createElement("BUTTON");
     passButton.id = "pass-btn";
-    passButton.textContent = "PASS";
+    passButton.textContent = "PASS!";
     passButton.disabled = true;
 
     const payButton = document.createElement("BUTTON");
@@ -28,7 +28,18 @@ export default class Controls {
     payButton.textContent = "PAY!";
     payButton.disabled = true;
 
-    buttonContainer.append(rollButton, buyButton, passButton, payButton);
+    const buildButton = document.createElement("BUTTON");
+    buildButton.id = "build-btn";
+    buildButton.textContent = "BUILD!";
+    buildButton.disabled = "true";
+
+    buttonContainer.append(
+      rollButton,
+      buyButton,
+      passButton,
+      payButton,
+      buildButton,
+    );
 
     this.#domElement = buttonContainer;
   }
