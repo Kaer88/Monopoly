@@ -4,6 +4,7 @@ import Player from "./player.js";
 import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./scoreBoard.js";
+import Controls from "./controls.js";
 export default class Board {
   #fields = [];
   #players;
@@ -29,54 +30,54 @@ export default class Board {
         ),
     );
 
+    const controls = new Controls();
+    controls.initControls();
+
     const boardDIV = document.createElement("DIV");
     boardDIV.id = "board";
-    boardDIV.style.height = "70rem";
-    boardDIV.style.width = "50rem";
-    boardDIV.style.margin = "auto 5em";
+    boardDIV.style.margin = "1em 3em";
+    boardDIV.style.display = "grid";
+
+    boardDIV.style.gridTemplateAreas = `
+    "top top top top"
+    "left middle middle right"
+    "left middle middle right"
+    "bottom bottom bottom bottom"
+    `;
+    const middleContainer = document.createElement("DIV");
+    middleContainer.style.gridArea = "middle";
+    middleContainer.style.display = "flex"
+    middleContainer.style.padding = "1rem"
+    middleContainer.prepend(controls.domElement)
+
     // fill fields array with field html objects
 
-    /*
-     * ezt még át kell gondolni, griddel bombabiztosabb lenne
-     * */
     const top = document.createElement("DIV");
     top.id = "top";
-    top.style.border = "1px solid black";
-    top.style.height = "7rem";
     top.style.display = "flex";
+    top.style.gridArea = "top";
 
     const right = document.createElement("DIV");
     right.id = "right";
-    right.style.border = "1px solid black";
-    right.style.height = "7rem";
-    right.style.width = "40rem";
     right.style.display = "flex";
+    right.style.gridArea = "right";
+    right.style.flexDirection = "column";
+    right.style.alignItems = "flex-end"
 
     const left = document.createElement("DIV");
     left.id = "right";
-    left.style.border = "1px solid black";
-    left.style.height = "7rem";
-    left.style.width = "40rem";
     left.style.display = "flex";
+    left.style.gridArea = "left";
+    left.style.flexDirection = "column-reverse";
 
     const bottom = document.createElement("DIV");
     bottom.id = "right";
-    bottom.style.border = "1px solid black";
-    bottom.style.height = "7rem";
     bottom.style.display = "flex";
-    bottom.style.flexDirection = "reverse";
+    bottom.style.flexDirection = "row-reverse";
+    bottom.style.gridArea = "bottom";
 
-    // rotate lanes with transform
-    right.style.transform =
-      "rotate(90deg) translateY(-26.5rem) translateX(16.5rem)";
-    left.style.transform =
-      "rotate(-90deg) translateY(-16.5rem) translateX(-9.4rem)";
-    bottom.style.transform = "translateY(25.9rem) rotate(180deg)";
 
-    boardDIV.append(top);
-    boardDIV.append(right);
-    boardDIV.append(left);
-    boardDIV.append(bottom);
+    boardDIV.append(middleContainer, top, right, left, bottom);
 
     this.#domElement = boardDIV;
 
@@ -91,7 +92,6 @@ export default class Board {
       .slice(31, 40)
       .forEach((field) => left.append(field.domElement));
 
-    // this.#fields.forEach((field) => boardDIV.append(field));
   }
 
   /**
@@ -136,18 +136,21 @@ export default class Board {
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
-        document
-          .querySelector("#roll-btn").disabled = true
+        document.querySelector("#roll-btn").disabled = true;
         document
           .querySelector("#roll-btn")
           .removeEventListener("click", rollBtnHandler);
         resolve();
       };
-      document.querySelector("#roll-btn").disabled = false;
-      document
-        .querySelector("#roll-btn")
-        .addEventListener("click", rollBtnHandler);
-    });
+      setTimeout(() => {
+        document.querySelector("#roll-btn").disabled = false;
+        document
+          .querySelector("#roll-btn")
+          .addEventListener("click", rollBtnHandler);
+      }, 0);
+
+      })
+
     ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
 
     // set player position on field according to the dice value

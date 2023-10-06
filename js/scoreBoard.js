@@ -11,7 +11,6 @@ export default class ScoreBoard {
         scoreBoardContainer.style.height = "60vh";
         scoreBoardContainer.style.width = "40vh";
         scoreBoardContainer.style.border = "1px solid black";
-        scoreBoardContainer.style.marginTop = "5vh";
 
         const messageBox = document.createElement("DIV");
         messageBox.style.overflowY = "scroll";

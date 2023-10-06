@@ -5,8 +5,8 @@ export default class Controls {
 
   initControls() {
     const buttonContainer = document.createElement("DIV");
-    buttonContainer.style.height = "10em";
-    buttonContainer.style.width = "10em";
+    buttonContainer.style.height = "5em";
+    buttonContainer.style.display = "flex"
 
     const rollButton = document.createElement("BUTTON");
     rollButton.textContent = "ROLL!";

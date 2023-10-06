@@ -31,8 +31,8 @@ export default class Field {
     fieldDiv.style.flexDirection = "column";
     fieldDiv.style.justifyContent = "space-around";
     fieldDiv.style.alignItems = "center";
-    fieldDiv.style.height = "7rem";
-    fieldDiv.style.width = "5rem";
+    fieldDiv.style.height = "4.3rem";
+    fieldDiv.style.width = "8rem";
     fieldDiv.style.margin = "0rem";
 
     const valueElement = document.createElement("SPAN");
@@ -43,7 +43,7 @@ export default class Field {
     valueElement.textContent = `${value} $`;
     nameElement.textContent = `${name}`;
     playerElement.style.display = "flex";
-    ownerElement.style.height = "1em";
+    ownerElement.style.height = "0.5em";
     ownerElement.style.width = "100%";
 
     fieldDiv.append(nameElement, playerElement, valueElement, ownerElement);

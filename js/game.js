@@ -1,6 +1,5 @@
 import Board from "./board.js";
 import ScoreBoard from "./scoreBoard.js";
-import DiceControls from "./controls.js";
 
 class Game {
   #board;
@@ -18,13 +17,11 @@ class Game {
     gameParentElement.id = "game-container";
     this.#domElement = gameParentElement;
     document.body.append(gameParentElement);
-    const diceControl = new DiceControls();
-    diceControl.initControls();
-    gameParentElement.append(diceControl.domElement);
-
-    // this.#scoreBoard.createDomElement();
     this.#board.start();
-    gameParentElement.prepend(this.#board.domElement, ScoreBoard.instance.domElement);
+    this.#board.domElement.children[0].append(ScoreBoard.instance.domElement);
+    gameParentElement.append(this.#board.domElement);
+
+
   }
 }
 
