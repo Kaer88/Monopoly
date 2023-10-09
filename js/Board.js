@@ -55,8 +55,7 @@ export default class Board {
     top.id = "top";
     top.style.display = "flex";
     top.style.gridArea = "top";
-    top.style.height = "7rem"
-
+    top.style.height = "7rem";
 
     const right = document.createElement("DIV");
     right.id = "right";
@@ -76,8 +75,7 @@ export default class Board {
     bottom.style.display = "flex";
     bottom.style.flexDirection = "row-reverse";
     bottom.style.gridArea = "bottom";
-    bottom.style.height = "7rem"
-
+    bottom.style.height = "7rem";
 
     boardDIV.append(middleContainer, top, right, left, bottom);
 
@@ -110,6 +108,13 @@ export default class Board {
         player.domElement,
       );
     });
+  }
+
+  #refreshScoreBoard() {
+    return ScoreBoard.instance.updatePlayerState(
+      this.#players,
+      this.#currentPlayerIndex,
+    );
   }
   async start() {
     this.#initBoard();
@@ -154,10 +159,19 @@ export default class Board {
       }, 0);
     });
 
-    // check if player looped around the board + add money
-    if (this.#players[this.#currentPlayerIndex].currentField + this.#diceRolled >= 40) {
-      this.#players[this.#currentPlayerIndex].balance += 100;
-      ScoreBoard.instance.newMessage(`${this.#players[this.#currentPlayerIndex].name} received money for looping around`)
+   // check if player looped around the board + add money
+    if (
+      this.#players[this.#currentPlayerIndex].currentField +
+        this.#diceRolled.reduce((acc, curr) => (acc += curr), 0) >=
+      40
+    ) {
+      this.#players[this.#currentPlayerIndex].balance += 200;
+      ScoreBoard.instance.newMessage(
+        `${
+          this.#players[this.#currentPlayerIndex].name
+        } received money for looping around`,
+      );
+      this.#refreshScoreBoard();
     }
 
     // set player position on field according to the dice value
@@ -198,10 +212,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-    ScoreBoard.instance.updatePlayerState(
-      this.#players,
-      this.#currentPlayerIndex,
-    );
+    this.#refreshScoreBoard();
     return this.#gameplayLoop();
   }
 }
