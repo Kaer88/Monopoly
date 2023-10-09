@@ -15,8 +15,7 @@ export const fieldTemplate = [
     name: "GO",
     value: 0,
     eventFn: (targetPlayer) => {},
-    penalties: [],
-    buildPrice: 0,
+
   },
   {
     name: "Old Kent Road",
@@ -45,7 +44,7 @@ export const fieldTemplate = [
   {
     name: "Kings Cross Station",
     value: 200,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
     buildPrice: 50,
   },
@@ -90,7 +89,7 @@ export const fieldTemplate = [
   {
     name: "Electric company",
     value: 150,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
   },
   {
@@ -110,8 +109,9 @@ export const fieldTemplate = [
   {
     name: "Marylebone Station",
     value: 200,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
+
 
   },
   {
@@ -174,7 +174,7 @@ export const fieldTemplate = [
   {
     name: "Fenchurch Station",
     value: 200,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
   },
   {
@@ -194,7 +194,7 @@ export const fieldTemplate = [
   {
     name: "Waterworks",
     value: 150,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
   },
   {
@@ -238,7 +238,7 @@ export const fieldTemplate = [
   {
     name: "Liverpool station",
     value: 200,
-    eventFn: propertyEvent,
+    eventFn: () => {},
     penalties: [25, 25, 25, 25, 25, 25],
 
   },
