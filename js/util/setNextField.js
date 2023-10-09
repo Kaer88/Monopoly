@@ -15,7 +15,6 @@ export default function setNextField(players, currentPlayer, diceArray, fields) 
   const diceValue = diceArray.reduce((acc, curr) => (acc += curr));
   let targetField;
   if (diceValue + currentPlayerPosition > fields.length - 1) {
-    console.log(fields.length)
     targetField = Math.abs(
       currentPlayerPosition + diceValue - fields.length,
     );

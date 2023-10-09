@@ -61,7 +61,7 @@ export default class Player {
     this.#domElement.style.width = "1em";
   }
 
-  async decide(fieldInfo) {
-    return fieldInfo.eventOnField(this);
+  async decide(fieldInfo, allFields, refreshScoreFn) {
+    return fieldInfo.eventOnField(this, allFields, refreshScoreFn);
   }
 }

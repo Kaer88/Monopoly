@@ -24,7 +24,7 @@ export default class Board {
           field.eventFn,
           field.penalties,
           field.buildPrice,
-          field.propertyGroupId
+          field.propertyGroupId,
         ),
     );
 
@@ -117,6 +117,10 @@ export default class Board {
       this.#currentPlayerIndex,
     );
   }
+
+  get players() {
+    return this.#players;
+  }
   async start() {
     this.#initBoard();
     this.#currentPlayerIndex = 0;
@@ -160,7 +164,7 @@ export default class Board {
       }, 0);
     });
 
-   // check if player looped around the board + add money
+    // check if player looped around the board + add money
     if (
       this.#players[this.#currentPlayerIndex].currentField +
         this.#diceRolled.reduce((acc, curr) => (acc += curr), 0) >=
@@ -205,7 +209,11 @@ export default class Board {
     ScoreBoard.instance.newMessage(
       `${activePlayer.name} arrived at ${activePlayerField.fieldName}`,
     );
-    await activePlayer.decide(activePlayerField);
+    await activePlayer.decide(
+      activePlayerField,
+      this.#fields,
+      this.#refreshScoreBoard,
+    );
 
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {

@@ -1,6 +1,6 @@
 import ScoreBoard from "../ScoreBoard.js";
 
-export async function propertyEvent(player, field) {
+export async function propertyEvent(player, field, allFields, refreshScoreFn) {
   if (field.owner === undefined) {
     return new Promise((resolve) => {
       const buyBtn = document.querySelector("#buy-btn");
@@ -30,6 +30,8 @@ export async function propertyEvent(player, field) {
         buyBtn.disabled = true;
 
         passBtn.removeEventListener("click", passFn);
+        buyBtn.removeEventListener("click", buyFn);
+
         resolve();
       };
       passBtn.disabled = false;
@@ -59,11 +61,19 @@ export async function propertyEvent(player, field) {
     });
   }
 
-  if (field.owner === player) {
+  if (
+    field.owner === player &&
+    allFields
+      .filter((property) => field.propertyGroupId === property.propertyGroupId)
+      .every((property) => property.owner === player)
+  ) {
     const buildBtn = document.querySelector("#build-btn");
     const passBtn = document.querySelector("#pass-btn");
 
     return new Promise((resolve) => {
+      ScoreBoard.instance.newMessage(
+        `Property of ${player.name}, house can be built for ${field.buildPrice}`,
+      );
       const buildFn = () => {
         if (player.balance < field.buildPrice) {
           ScoreBoard.instance.newMessage("Not enough funds!");
@@ -72,11 +82,11 @@ export async function propertyEvent(player, field) {
 
         try {
           field.addHouse(player);
-
-        } catch(err) {
-          ScoreBoard.instance.newMessage(err)
+          player.balance -= field.buildPrice;
+          refreshScoreFn();
+        } catch (err) {
+          ScoreBoard.instance.newMessage(err);
         }
-        player.balance -= field.buildPrice;
         ScoreBoard.instance.newMessage(
           `${player.name} built a house on ${field.fieldName}`,
         );
@@ -86,7 +96,6 @@ export async function propertyEvent(player, field) {
         buildBtn.disabled = true;
         passBtn.removeEventListener("click", passFn);
         buildBtn.removeEventListener("click", buildFn);
-
         resolve();
       };
 

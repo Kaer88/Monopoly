@@ -76,12 +76,19 @@ export default class Field {
     houseContainer.flexWrap = "wrap";
     houseContainer.style.gap = "0.2em";
     groupColorContainer.style.height = "1em";
-    groupColorContainer.style.position = "absolute"
-    groupColorContainer.style.width = "100%"
-    groupColorContainer.style.top = "-12px"
-    groupColorContainer.style.backgroundColor = getPropertyColor(propertyGroupId)
+    groupColorContainer.style.position = "absolute";
+    groupColorContainer.style.width = "100%";
+    groupColorContainer.style.top = "-12px";
+    groupColorContainer.style.backgroundColor =
+      getPropertyColor(propertyGroupId);
 
-    fieldDiv.append(nameElement, playerElement, ownerElement, houseContainer, groupColorContainer);
+    fieldDiv.append(
+      nameElement,
+      playerElement,
+      ownerElement,
+      houseContainer,
+      groupColorContainer,
+    );
     value !== 0 && fieldDiv.append(valueElement);
 
     this.#domElement = fieldDiv;
@@ -110,6 +117,10 @@ export default class Field {
   get buildPrice() {
     return this.#buildPrice;
   }
+  get propertyGroupId() {
+    return this.#propertyGroupId;
+  }
+
   addHouse(player) {
     if (this.#nrOfHousesBuilt > 3)
       throw new Error("Cant build any more house on this field!");
@@ -133,8 +144,8 @@ export default class Field {
   getPenalty() {
     return this.#penalties[this.#nrOfHousesBuilt];
   }
-  async eventOnField(player) {
-    return this.#eventOnField(player, this);
+  async eventOnField(player, allFields, refreshScoreFn) {
+    return this.#eventOnField(player, this, allFields, refreshScoreFn);
   }
 
   get domElement() {
