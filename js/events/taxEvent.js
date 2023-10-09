@@ -5,7 +5,7 @@
  * @param allFields {Field[]}
  * @param refreshScoreFn {function}
  */
-import ScoreBoard from "../ScoreBoard";
+import ScoreBoard from "../ScoreBoard.js";
 
 export default function taxEvent(player, fieldInfo, allFields, refreshScoreFn) {
   return new Promise((resolve) => {

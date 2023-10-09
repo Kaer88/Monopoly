@@ -1,4 +1,4 @@
-import getPropertyColor from "./constants/propertyGroupColors.js";
+import getPropertyColor from "./util/propertyGroupColors.js";
 
 export default class Field {
   #eventOnField; // property event, card event, jail event
