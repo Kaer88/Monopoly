@@ -154,9 +154,13 @@ export default class Board {
       }, 0);
     });
 
+    // check if player looped around the board + add money
+    if (this.#players[this.#currentPlayerIndex].currentField + this.#diceRolled >= 40) {
+      this.#players[this.#currentPlayerIndex].balance += 100;
+      ScoreBoard.instance.newMessage(`${this.#players[this.#currentPlayerIndex].name} received money for looping around`)
+    }
 
     // set player position on field according to the dice value
-
     setNextField(
       this.#players,
       this.#currentPlayerIndex,
