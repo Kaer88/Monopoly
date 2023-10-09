@@ -91,6 +91,7 @@ export const fieldTemplate = [
     name: "Electric company",
     value: 150,
     eventFn: propertyEvent,
+    penalties: [25, 25, 25, 25, 25, 25],
   },
   {
     name: "Whitehall",
@@ -194,6 +195,7 @@ export const fieldTemplate = [
     name: "Waterworks",
     value: 150,
     eventFn: propertyEvent,
+    penalties: [25, 25, 25, 25, 25, 25],
   },
   {
     name: "Piccadilly",
