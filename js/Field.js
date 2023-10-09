@@ -1,10 +1,12 @@
+import getPropertyColor from "./constants/propertyGroupColors.js";
+
 export default class Field {
   #eventOnField; // property event, card event, jail event
   #fieldName;
   #value;
   #owner;
   #domElement;
-  #color;
+  #propertyGroupColor;
   #propertyGroupId;
   #nrOfHousesBuilt = 0;
   #penalties;
@@ -16,14 +18,22 @@ export default class Field {
    * @param eventOnField {function}
    * @param penalties {Number[]}
    * @param buildPrice {Number}
-   *
+   * @param propertyGroupId {Number}
    */
-  constructor(name, value, eventOnField, penalties, buildPrice) {
+  constructor(
+    name,
+    value,
+    eventOnField,
+    penalties,
+    buildPrice,
+    propertyGroupId,
+  ) {
     this.#fieldName = name;
     this.#value = value;
     this.#eventOnField = eventOnField;
     this.#penalties = penalties;
     this.#buildPrice = buildPrice;
+    this.#propertyGroupId = propertyGroupId;
 
     const fieldDiv = document.createElement("DIV");
     fieldDiv.style.border = "1px solid black";
@@ -44,8 +54,10 @@ export default class Field {
     const playerElement = document.createElement("DIV");
     const ownerElement = document.createElement("DIV");
     const houseContainer = document.createElement("DIV");
+    const groupColorContainer = document.createElement("DIV");
 
     valueElement.textContent = `${value} $`;
+    nameElement.textContent = `${name}`;
     nameElement.textContent = `${name}`;
     playerElement.style.display = "flex";
     ownerElement.style.height = "3em";
@@ -63,8 +75,13 @@ export default class Field {
     houseContainer.style.display = "flex";
     houseContainer.flexWrap = "wrap";
     houseContainer.style.gap = "0.2em";
+    groupColorContainer.style.height = "1em";
+    groupColorContainer.style.position = "absolute"
+    groupColorContainer.style.width = "100%"
+    groupColorContainer.style.top = "-12px"
+    groupColorContainer.style.backgroundColor = getPropertyColor(propertyGroupId)
 
-    fieldDiv.append(nameElement, playerElement, ownerElement, houseContainer);
+    fieldDiv.append(nameElement, playerElement, ownerElement, houseContainer, groupColorContainer);
     value !== 0 && fieldDiv.append(valueElement);
 
     this.#domElement = fieldDiv;
@@ -94,7 +111,8 @@ export default class Field {
     return this.#buildPrice;
   }
   addHouse(player) {
-    if (this.#nrOfHousesBuilt > 3) throw new Error('Cant build any more house on this field!')
+    if (this.#nrOfHousesBuilt > 3)
+      throw new Error("Cant build any more house on this field!");
     this.#nrOfHousesBuilt += 1;
     const houseDom = document.createElement("DIV");
     houseDom.style.backgroundColor = player.color;

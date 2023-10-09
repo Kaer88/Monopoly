@@ -24,6 +24,7 @@ export default class Board {
           field.eventFn,
           field.penalties,
           field.buildPrice,
+          field.propertyGroupId
         ),
     );
 
