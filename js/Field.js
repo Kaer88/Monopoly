@@ -90,8 +90,11 @@ export default class Field {
     return this.#owner;
   }
 
+  get buildPrice() {
+    return this.#buildPrice;
+  }
   addHouse(player) {
-    if (this.#nrOfHousesBuilt > 4) throw new Error('Cant build any more house on this field!')
+    if (this.#nrOfHousesBuilt > 3) throw new Error('Cant build any more house on this field!')
     this.#nrOfHousesBuilt += 1;
     const houseDom = document.createElement("DIV");
     houseDom.style.backgroundColor = player.color;
