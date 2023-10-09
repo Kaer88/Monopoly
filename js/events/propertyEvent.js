@@ -10,7 +10,10 @@ export async function propertyEvent(player, field) {
         `The property is not yet owned, ${player.name} do you want to buy it for ${field.value}$?`,
       );
       const buyFn = () => {
-        if (player.balance - field.value < 0) return ScoreBoard.instance.newMessage(`Not enough funds!`);
+        if (player.balance - field.value < 0) {
+          ScoreBoard.instance.newMessage(`Not enough funds!`);
+          return;
+        }
         field.setOwner(player);
         player.balance = player.balance - field.value;
         buyBtn.disabled = true;
@@ -53,6 +56,45 @@ export async function propertyEvent(player, field) {
       };
       payBtn.disabled = false;
       payBtn.addEventListener("click", payFn);
+    });
+  }
+
+  if (field.owner === player) {
+    const buildBtn = document.querySelector("#build-btn");
+    const passBtn = document.querySelector("#pass-btn");
+
+    return new Promise((resolve) => {
+      const buildFn = () => {
+        if (player.balance < field.buildPrice) {
+          ScoreBoard.instance.newMessage("Not enough funds!");
+          return;
+        }
+
+        try {
+          field.addHouse(player);
+
+        } catch(err) {
+          ScoreBoard.instance.newMessage(err)
+        }
+        player.balance -= field.buildPrice;
+        ScoreBoard.instance.newMessage(
+          `${player.name} built a house on ${field.fieldName}`,
+        );
+      };
+      const passFn = () => {
+        passBtn.disabled = true;
+        buildBtn.disabled = true;
+        passBtn.removeEventListener("click", passFn);
+        buildBtn.removeEventListener("click", buildFn);
+
+        resolve();
+      };
+
+      buildBtn.disabled = false;
+      passBtn.disabled = false;
+
+      buildBtn.addEventListener("click", buildFn);
+      passBtn.addEventListener("click", passFn);
     });
   }
 }
