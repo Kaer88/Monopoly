@@ -9,7 +9,7 @@ export default class Board {
   #fields = [];
   #players;
   #domElement;
-  #diceRolled;
+  #diceRolled = null;
   #currentPlayerIndex = 0;
 
   get domElement() {
@@ -178,12 +178,13 @@ export default class Board {
         (dice) => dice === this.#diceRolled[0],
       );
 
-      if (isDouble && currentPlayer.turnsInJail > 0) {
+      if (isDouble || gotOutOfJail) {
         currentPlayer.turnsInJail = 0;
         gotOutOfJail = true;
         ScoreBoard.instance.newMessage(
           `${currentPlayer.name} rolled double and got out of jail!`,
         );
+        this.#refreshScoreBoard()
       }
 
       if (!gotOutOfJail) {
@@ -199,12 +200,13 @@ export default class Board {
         } else {
           this.#currentPlayerIndex = ++this.#currentPlayerIndex;
         }
+        this.#diceRolled = null;
         this.#refreshScoreBoard();
         return this.#gameplayLoop();
       }
     }
 
-    await this.#rollDice(currentPlayer);
+    this.#diceRolled === null && await this.#rollDice(currentPlayer);
 
     // check if player loops around the board + add money
     const diceSum = this.#diceRolled.reduce((acc, curr) => (acc += curr), 0);
@@ -244,6 +246,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
+    this.#diceRolled = null;
     this.#refreshScoreBoard();
     return this.#gameplayLoop();
   }
