@@ -10,7 +10,12 @@ const colorsById = {
   8: "#290982"
 
 }
-export default function getPropertyColor(fieldId) {
-  return colorsById[fieldId];
+/**
+ *
+ * @param fieldGroupId {number}
+ * @returns {String}
+ */
+export default function getPropertyColor(fieldGroupId) {
+  return colorsById[fieldGroupId];
 }
 

@@ -10,6 +10,7 @@
  */
 import { propertyEvent } from "../events/propertyEvent.js";
 import taxEvent from "../events/taxEvent.js";
+import goToJail from "../events/goToPrison.js";
 
 export const fieldTemplate = [
   {
@@ -222,7 +223,7 @@ export const fieldTemplate = [
   {
     name: "Go to Jail",
     value: 0,
-    eventFn: (targetPlayer) => {},
+    eventFn: goToJail,
   },
   {
     name: "Regent Street",
