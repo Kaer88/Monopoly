@@ -152,6 +152,7 @@ export default class Board {
           .removeEventListener("click", rollBtnHandler);
         setTimeout(() => resolve(), 800);
       };
+      // setTimeout to put adding event listeners at the end of the call stack
       setTimeout(() => {
         document.querySelector("#roll-btn").disabled = false;
         document
@@ -164,29 +165,32 @@ export default class Board {
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
     const currentPlayer = this.#players[this.#currentPlayerIndex];
-
+    // jail path
     if (currentPlayer.turnsInJail > 0) {
       const jailField = this.#fields[10];
+      // player decide on paying or using card
       const gotOutOfJailRes = await currentPlayer.decide(
         jailField,
         this.#fields,
         this.#refreshScoreBoard,
       );
       let gotOutOfJail = await gotOutOfJailRes;
+      // refresh scoreboard if player got out of jail
+      gotOutOfJail && this.#refreshScoreBoard();
+      // roll dice to see if double, or for moving on board is got out of jail
       await this.#rollDice(currentPlayer);
+      // check for double and set got out of jail variable to true if double
       const isDouble = this.#diceRolled.every(
         (dice) => dice === this.#diceRolled[0],
       );
-
       if (isDouble || gotOutOfJail) {
         currentPlayer.turnsInJail = 0;
         gotOutOfJail = true;
         ScoreBoard.instance.newMessage(
           `${currentPlayer.name} rolled double and got out of jail!`,
         );
-        this.#refreshScoreBoard()
       }
-
+      // deduct one from days in prison, render, restart gameplay loop with next player
       if (!gotOutOfJail) {
         if (currentPlayer.turnsInJail === 1) {
           currentPlayer.balance -= 50;
@@ -195,6 +199,9 @@ export default class Board {
           );
         }
         currentPlayer.turnsInJail -= 1;
+
+
+
         if (this.#currentPlayerIndex === this.#players.length - 1) {
           this.#currentPlayerIndex = 0;
         } else {
@@ -206,7 +213,7 @@ export default class Board {
       }
     }
 
-    this.#diceRolled === null && await this.#rollDice(currentPlayer);
+    this.#diceRolled === null && (await this.#rollDice(currentPlayer));
 
     // check if player loops around the board + add money
     const diceSum = this.#diceRolled.reduce((acc, curr) => (acc += curr), 0);
@@ -242,14 +249,17 @@ export default class Board {
 
     // check for bankrupt players
 
-    const bankruptPlayers = this.#players.filter(player => player.balance <= 0)
-    if(bankruptPlayers.length > 0) {
-      bankruptPlayers.forEach(player => {
+    const bankruptPlayers = this.#players.filter(
+      (player) => player.balance <= 0,
+    );
+    if (bankruptPlayers.length > 0) {
+      bankruptPlayers.forEach((player) => {
         player.domElement.remove();
-        ScoreBoard.instance.newMessage(`${player.name} went bankrupt!`)
-      })
+        player.properties.forEach((property) => property.setOwner(null));
+        ScoreBoard.instance.newMessage(`${player.name} went bankrupt!`);
+      });
     }
-    this.#players = this.#players.filter(player => player.balance > 0)
+    this.#players = this.#players.filter((player) => player.balance > 0);
 
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {

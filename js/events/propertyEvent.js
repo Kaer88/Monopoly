@@ -1,7 +1,7 @@
 import ScoreBoard from "../ScoreBoard.js";
 
 export async function propertyEvent(player, field, allFields, refreshScoreFn) {
-  if (field.owner === undefined) {
+  if (field.owner === null) {
     return new Promise((resolve) => {
       const buyBtn = document.querySelector("#buy-btn");
       const passBtn = document.querySelector("#pass-btn");
@@ -16,6 +16,7 @@ export async function propertyEvent(player, field, allFields, refreshScoreFn) {
         }
         field.setOwner(player);
         player.balance = player.balance - field.value;
+        player.properties.push(field);
         buyBtn.disabled = true;
         passBtn.disabled = true;
         buyBtn.removeEventListener("click", buyFn);

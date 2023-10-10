@@ -11,6 +11,7 @@ export default async function inJailEvent(player) {
       ScoreBoard.instance.newMessage(
         `${player.name} decided to pay 50$, they are free now`,
       );
+      player.turnsInJail = 0;
       player.balance -= 50;
       payBtn.disabled = true;
       passBtn.disabled = true;

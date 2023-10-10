@@ -4,7 +4,7 @@ export default class Field {
   #eventOnField; // property event, card event, jail event
   #fieldName;
   #value;
-  #owner;
+  #owner = null;
   #domElement;
   #propertyGroupColor;
   #propertyGroupId;
@@ -99,6 +99,10 @@ export default class Field {
    * @param player {Player}
    */
   #setOwnerColor(player) {
+    if (player === null) {
+      this.#domElement.children[2].style.backgroundColor = "";
+      return;
+    }
     this.#domElement.children[2].style.backgroundColor = player.color;
   }
 
@@ -134,7 +138,7 @@ export default class Field {
 
   /**
    *
-   * @param newOwner {Player}
+   * @param newOwner {Player || null}
    */
   setOwner(newOwner) {
     this.#owner = newOwner;
