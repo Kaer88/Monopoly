@@ -140,14 +140,7 @@ export default class Board {
     console.log("gameplay loop end");
   }
 
-  #rollDice() {
-
-  }
-
-  async #gameplayLoop() {
-    if (this.#players.length === 1) return null;
-    const currentPlayer = this.#players[this.#currentPlayerIndex];
-
+  async #rollDice(currentPlayer) {
     await new Promise((resolve) => {
       ScoreBoard.instance.newMessage(`${currentPlayer.name}. roll the dice`);
       const rollBtnHandler = () => {
@@ -166,23 +159,39 @@ export default class Board {
           .addEventListener("click", rollBtnHandler);
       }, 0);
     });
+  }
 
-    // Jail mechanics
-    const isDouble = this.#diceRolled.every(
-      (dice) => dice === this.#diceRolled[0],
-    );
-    if (currentPlayer.turnsInJail > 0 && !isDouble) {
+  async #gameplayLoop() {
+    if (this.#players.length === 1) return null;
+    const currentPlayer = this.#players[this.#currentPlayerIndex];
+
+    if (currentPlayer.turnsInJail > 0) {
       const jailField = this.#fields[10];
       const gotOutOfJailRes = await currentPlayer.decide(
         jailField,
         this.#fields,
         this.#refreshScoreBoard,
       );
+      let gotOutOfJail = await gotOutOfJailRes;
+      await this.#rollDice(currentPlayer);
+      const isDouble = this.#diceRolled.every(
+        (dice) => dice === this.#diceRolled[0],
+      );
 
-      if (!(await gotOutOfJailRes)) {
+      if (isDouble && currentPlayer.turnsInJail > 0) {
+        currentPlayer.turnsInJail = 0;
+        gotOutOfJail = true;
+        ScoreBoard.instance.newMessage(
+          `${currentPlayer.name} rolled double and got out of jail!`,
+        );
+      }
+
+      if (!gotOutOfJail) {
         if (currentPlayer.turnsInJail === 1) {
           currentPlayer.balance -= 50;
-          ScoreBoard.instance.newMessage(`${currentPlayer.name} jail time served and paid 50$ fine`)
+          ScoreBoard.instance.newMessage(
+            `${currentPlayer.name} jail time served and paid 50$ fine`,
+          );
         }
         currentPlayer.turnsInJail -= 1;
         if (this.#currentPlayerIndex === this.#players.length - 1) {
@@ -195,12 +204,8 @@ export default class Board {
       }
     }
 
-    if (isDouble && currentPlayer.turnsInJail > 0) {
-      currentPlayer.turnsInJail = 0;
-      ScoreBoard.instance.newMessage(
-        `${currentPlayer.name} rolled double and got out of jail!`,
-      );
-    }
+    await this.#rollDice(currentPlayer);
+
     // check if player loops around the board + add money
     const diceSum = this.#diceRolled.reduce((acc, curr) => (acc += curr), 0);
     if (currentPlayer.currentField + diceSum >= 40) {
