@@ -9,6 +9,6 @@ export default async function goToJail(player) {
     player.turnsInJail = 3;
     player.movePlayer(10);
     ScoreBoard.instance.newMessage(`${player.name} is sent to Jail..`);
-    resolve();
+    setTimeout(() => resolve(), 800);
   });
 }

@@ -176,6 +176,10 @@ export default class Board {
       );
 
       if (!(await gotOutOfJailRes)) {
+        if (currentPlayer.turnsInJail === 1) {
+          currentPlayer.balance -= 50;
+          ScoreBoard.instance.newMessage(`${currentPlayer.name} jail time served and paid 50$ fine`)
+        }
         currentPlayer.turnsInJail -= 1;
         if (this.#currentPlayerIndex === this.#players.length - 1) {
           this.#currentPlayerIndex = 0;

@@ -6,7 +6,11 @@ export default class Controls {
   initControls() {
     const buttonContainer = document.createElement("DIV");
     buttonContainer.style.height = "5em";
-    buttonContainer.style.display = "flex";
+    buttonContainer.style.display = "grid";
+    buttonContainer.style.width = "16vw"
+    buttonContainer.style.gridTemplateColumns = "1fr 1fr 1fr 1fr"
+    buttonContainer.style.gridTemplateRows = "1fr 1fr"
+    buttonContainer.style.gap = "0.1em"
 
     const rollButton = document.createElement("BUTTON");
     rollButton.textContent = "ROLL!";
@@ -33,12 +37,18 @@ export default class Controls {
     buildButton.textContent = "BUILD!";
     buildButton.disabled = "true";
 
+    const useCardButton = document.createElement("BUTTON")
+    useCardButton.id = "use-card-btn";
+    useCardButton.textContent = "USE CARD"
+    useCardButton.disabled = "true";
+
     buttonContainer.append(
       rollButton,
       buyButton,
       passButton,
       payButton,
       buildButton,
+      useCardButton
     );
 
     this.#domElement = buttonContainer;

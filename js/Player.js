@@ -6,6 +6,7 @@ export default class Player {
   #domElement;
   #color;
   #properties = [];
+  #getOutOfJailCards = 0;
 
   /**
    *
@@ -18,6 +19,13 @@ export default class Player {
     this.#createDomElement(color);
   }
 
+  get getOutOfJailCards() {
+    return this.#getOutOfJailCards;
+  }
+
+  set getOutOfJailCards(number) {
+    this.#getOutOfJailCards = number;
+  }
   get name() {
     return this.#name;
   }
