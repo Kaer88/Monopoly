@@ -142,10 +142,8 @@ export default class Board {
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
-    const currentPlayer = this.#players[this.#currentPlayerIndex]
-    ScoreBoard.instance.newMessage(
-      `${currentPlayer.name}. roll the dice`,
-    );
+    const currentPlayer = this.#players[this.#currentPlayerIndex];
+    ScoreBoard.instance.newMessage(`${currentPlayer.name}. roll the dice`);
 
     await new Promise((resolve) => {
       const rollBtnHandler = () => {
@@ -165,17 +163,39 @@ export default class Board {
       }, 0);
     });
 
+    // Jail mechanics
+    const isDouble = this.#diceRolled.every(
+      (dice) => dice === this.#diceRolled,
+    );
+    if (currentPlayer.turnsInJail > 0 && !isDouble) {
+      const jailField = this.#fields[10];
+      const gotOutOfJail = await currentPlayer.decide(
+        jailField,
+        this.#fields,
+        this.#refreshScoreBoard,
+      );
 
-    // Jail
+      if (!(await gotOutOfJail)) {
+        currentPlayer.turnsInJail -= 1;
+        if (this.#currentPlayerIndex === this.#players.length - 1) {
+          this.#currentPlayerIndex = 0;
+        } else {
+          this.#currentPlayerIndex = ++this.#currentPlayerIndex;
+        }
+        this.#refreshScoreBoard();
+        return this.#gameplayLoop();
+      }
+    }
 
-
-
+    if (isDouble && currentPlayer.turnsInJail > 0) {
+      currentPlayer.turnsInJail = 0;
+      ScoreBoard.instance.newMessage(
+        `${currentPlayer.name} rolled double and got out of jail!`,
+      );
+    }
     // check if player loops around the board + add money
-    if (
-      currentPlayer.currentField +
-      this.#diceRolled.reduce((acc, curr) => (acc += curr), 0) >=
-      40
-    ) {
+    const diceSum = this.#diceRolled.reduce((acc, curr) => (acc += curr), 0);
+    if (currentPlayer.currentField + diceSum >= 40) {
       currentPlayer.balance += 200;
       ScoreBoard.instance.newMessage(
         `${
@@ -186,27 +206,7 @@ export default class Board {
     }
 
     // set player position on field according to the dice value
-    setNextField(
-      currentPlayer,
-      this.#diceRolled,
-      this.#fields,
-    );
-
-
-
-
-    // const currentPlayerIndexPosition =
-    //   this.#players[this.#currentPlayerIndex].currentField;
-    // const diceValue = this.#diceRolled.reduce((acc, curr) => (acc += curr));
-    // let targetField;
-    // if (diceValue + currentPlayerIndexPosition > 37) {
-    //   targetField = Math.abs(
-    //     currentPlayerIndexPosition + diceValue - this.#fieldTemplate.length,
-    //   );
-    // } else {
-    //   targetField = currentPlayerIndexPosition + diceValue;
-    // }
-    // this.#players[this.#currentPlayerIndex].movePlayer(targetField);
+    setNextField(currentPlayer, this.#diceRolled, this.#fields);
 
     // update dom state
     this.#renderPlayers();
