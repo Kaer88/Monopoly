@@ -169,13 +169,13 @@ export default class Board {
     );
     if (currentPlayer.turnsInJail > 0 && !isDouble) {
       const jailField = this.#fields[10];
-      const gotOutOfJail = await currentPlayer.decide(
+      const gotOutOfJailRes = await currentPlayer.decide(
         jailField,
         this.#fields,
         this.#refreshScoreBoard,
       );
 
-      if (!(await gotOutOfJail)) {
+      if (!(await gotOutOfJailRes)) {
         currentPlayer.turnsInJail -= 1;
         if (this.#currentPlayerIndex === this.#players.length - 1) {
           this.#currentPlayerIndex = 0;
@@ -221,6 +221,9 @@ export default class Board {
       this.#fields,
       this.#refreshScoreBoard,
     );
+
+    // post-move rerender of players
+    this.#renderPlayers();
 
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {

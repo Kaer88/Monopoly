@@ -10,7 +10,8 @@
  */
 import { propertyEvent } from "../events/propertyEvent.js";
 import taxEvent from "../events/taxEvent.js";
-import goToJail from "../events/goToPrison.js";
+import goToJail from "../events/goToJail.js";
+import inJailEvent from "../events/inJailEvent.js";
 
 export const fieldTemplate = [
   {
@@ -29,7 +30,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: (targetPlayer) => {},
+    eventFn: goToJail,
   },
   {
     name: "Whitechapel Road",
@@ -62,7 +63,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: (targetPlayer) => {},
+    eventFn: goToJail,
   },
   {
     name: "Euston Road",
@@ -83,7 +84,7 @@ export const fieldTemplate = [
   {
     name: "Jail",
     value: 0,
-    eventFn: (targetPlayer) => {},
+    eventFn: inJailEvent,
   },
   {
     name: "Pall Mall",
@@ -132,7 +133,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: (targetPlayer) => {},
+    eventFn: goToJail,
   },
   {
     name: "Marlborough St.",
@@ -166,7 +167,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: () => {},
+    eventFn: goToJail,
   },
   {
     name: "Fleet Street",

@@ -56,7 +56,7 @@ export default class ScoreBoard {
 
       nameSpan.textContent = playerData.name;
       balanceSpan.textContent = `${playerData.balance} $`;
-      isInJail.textContent = `${playerData.isInJail ? "in jail" : "free"}`;
+      isInJail.textContent = `${playerData.turnsInJail > 0 ? `in jail (${playerData.turnsInJail})` : "free"}`;
 
       playerContainer.append(nameSpan, balanceSpan, isInJail);
       targetElement.append(playerContainer);
