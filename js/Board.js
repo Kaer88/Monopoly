@@ -240,6 +240,17 @@ export default class Board {
     // post-move rerender of players
     this.#renderPlayers();
 
+    // check for bankrupt players
+
+    const bankruptPlayers = this.#players.filter(player => player.balance <= 0)
+    if(bankruptPlayers.length > 0) {
+      bankruptPlayers.forEach(player => {
+        player.domElement.remove();
+        ScoreBoard.instance.newMessage(`${player.name} went bankrupt!`)
+      })
+    }
+    this.#players = this.#players.filter(player => player.balance > 0)
+
     // set next player
     if (this.#currentPlayerIndex === this.#players.length - 1) {
       this.#currentPlayerIndex = 0;

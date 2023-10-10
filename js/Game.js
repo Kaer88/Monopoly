@@ -5,14 +5,10 @@ import ScoreBoard from "./ScoreBoard.js";
 /*
 TODO:
 - Kill player function for board, hand down to player -> event fn
-- finish property event
 - card events, buttons as card
 - station/utility events
-- field groups, field group colors
 - name input, color picker and start game button
-- tax event
 - sell property, push property references to an array on player instance
-- jail, go to jail, get out of jail card
 - make it look nice
 - function at the end of gameplay loop to check if any player's balance < 0
 
