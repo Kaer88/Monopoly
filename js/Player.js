@@ -1,6 +1,6 @@
 export default class Player {
   #balance = 1500;
-  #isInJail = false;
+  #turnsInJail = 0;
   #currentField = 0;
   #name;
   #domElement;
@@ -28,11 +28,11 @@ export default class Player {
     this.#balance = newBalance;
   }
 
-  get isInJail() {
-    return this.#isInJail;
+  get turnsInJail() {
+    return this.#turnsInJail;
   }
-  set isInJail(boolParameter) {
-    this.#isInJail = boolParameter;
+  set turnsInJail(number) {
+    this.#turnsInJail = number;
   }
   get currentField() {
     return this.#currentField;

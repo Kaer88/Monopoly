@@ -142,8 +142,9 @@ export default class Board {
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
+    const currentPlayer = this.#players[this.#currentPlayerIndex]
     ScoreBoard.instance.newMessage(
-      `${this.#players[this.#currentPlayerIndex].name}. roll the dice`,
+      `${currentPlayer.name}. roll the dice`,
     );
 
     await new Promise((resolve) => {
@@ -164,13 +165,18 @@ export default class Board {
       }, 0);
     });
 
-    // check if player looped around the board + add money
+
+    // Jail
+
+
+
+    // check if player loops around the board + add money
     if (
-      this.#players[this.#currentPlayerIndex].currentField +
-        this.#diceRolled.reduce((acc, curr) => (acc += curr), 0) >=
+      currentPlayer.currentField +
+      this.#diceRolled.reduce((acc, curr) => (acc += curr), 0) >=
       40
     ) {
-      this.#players[this.#currentPlayerIndex].balance += 200;
+      currentPlayer.balance += 200;
       ScoreBoard.instance.newMessage(
         `${
           this.#players[this.#currentPlayerIndex].name
@@ -181,11 +187,13 @@ export default class Board {
 
     // set player position on field according to the dice value
     setNextField(
-      this.#players,
-      this.#currentPlayerIndex,
+      currentPlayer,
       this.#diceRolled,
       this.#fields,
     );
+
+
+
 
     // const currentPlayerIndexPosition =
     //   this.#players[this.#currentPlayerIndex].currentField;
@@ -204,12 +212,11 @@ export default class Board {
     this.#renderPlayers();
 
     // field info given to player method to take a buy/draw/pay tax etc
-    const activePlayer = this.#players[this.#currentPlayerIndex];
-    const activePlayerField = this.#fields[activePlayer.currentField];
+    const activePlayerField = this.#fields[currentPlayer.currentField];
     ScoreBoard.instance.newMessage(
-      `${activePlayer.name} arrived at ${activePlayerField.fieldName}`,
+      `${currentPlayer.name} arrived at ${activePlayerField.fieldName}`,
     );
-    await activePlayer.decide(
+    await currentPlayer.decide(
       activePlayerField,
       this.#fields,
       this.#refreshScoreBoard,
