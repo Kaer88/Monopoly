@@ -140,12 +140,16 @@ export default class Board {
     console.log("gameplay loop end");
   }
 
+  #rollDice() {
+
+  }
+
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
     const currentPlayer = this.#players[this.#currentPlayerIndex];
-    ScoreBoard.instance.newMessage(`${currentPlayer.name}. roll the dice`);
 
     await new Promise((resolve) => {
+      ScoreBoard.instance.newMessage(`${currentPlayer.name}. roll the dice`);
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
         ScoreBoard.instance.newMessage(`Dice rolled: ${this.#diceRolled}`);
@@ -165,7 +169,7 @@ export default class Board {
 
     // Jail mechanics
     const isDouble = this.#diceRolled.every(
-      (dice) => dice === this.#diceRolled,
+      (dice) => dice === this.#diceRolled[0],
     );
     if (currentPlayer.turnsInJail > 0 && !isDouble) {
       const jailField = this.#fields[10];

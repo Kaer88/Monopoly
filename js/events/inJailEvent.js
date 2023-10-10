@@ -1,6 +1,8 @@
 import ScoreBoard from "../ScoreBoard.js";
 
 export default async function inJailEvent(player) {
+  if (player.turnsInJail === 0) return;
+
   const payBtn = document.querySelector("#pay-btn");
   const useCardBtn = document.querySelector("#use-card-btn");
   const passBtn = document.querySelector("#pass-btn");
