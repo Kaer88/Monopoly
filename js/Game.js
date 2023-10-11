@@ -4,13 +4,13 @@ import ScoreBoard from "./ScoreBoard.js";
 
 /*
 TODO:
-- Kill player function for board, hand down to player -> event fn
 - card events, buttons as card
+- ability to buy house on all properties in the property group if on any of the property group fields
 - station/utility events
 - name input, color picker and start game button
-- sell property, push property references to an array on player instance
+- sell property dialog
 - make it look nice
-- function at the end of gameplay loop to check if any player's balance < 0
+- BUG: can go below 0 with paying prison fine and still roll
 
  */
 class Game {

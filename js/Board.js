@@ -5,6 +5,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./ScoreBoard.js";
 import Controls from "./Controls.js";
+import sellPropertyModal from "./sellPropertyModal.js";
 export default class Board {
   #fields = [];
   #players;
@@ -35,6 +36,7 @@ export default class Board {
     boardDIV.id = "board";
     boardDIV.style.margin = "1em auto";
     boardDIV.style.display = "grid";
+    boardDIV.style.position = "relative"
 
     boardDIV.style.gridTemplateAreas = `
     "top top top top"
@@ -136,6 +138,8 @@ export default class Board {
       this.#currentPlayerIndex,
     );
 
+    const modal =  new sellPropertyModal(this.#players);
+    this.#domElement.append(modal.domElement)
     await this.#gameplayLoop();
     console.log("gameplay loop end");
   }
@@ -199,8 +203,6 @@ export default class Board {
           );
         }
         currentPlayer.turnsInJail -= 1;
-
-
 
         if (this.#currentPlayerIndex === this.#players.length - 1) {
           this.#currentPlayerIndex = 0;
