@@ -5,7 +5,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./ScoreBoard.js";
 import Controls from "./Controls.js";
-import sellPropertyModal from "./sellPropertyModal.js";
+import barterModal from "./barterModal.js";
 export default class Board {
   #fields = [];
   #players;
@@ -36,7 +36,7 @@ export default class Board {
     boardDIV.id = "board";
     boardDIV.style.margin = "1em auto";
     boardDIV.style.display = "grid";
-    boardDIV.style.position = "relative"
+    boardDIV.style.position = "relative";
 
     boardDIV.style.gridTemplateAreas = `
     "top top top top"
@@ -138,8 +138,6 @@ export default class Board {
       this.#currentPlayerIndex,
     );
 
-    const modal =  new sellPropertyModal(this.#players);
-    this.#domElement.append(modal.domElement)
     await this.#gameplayLoop();
     console.log("gameplay loop end");
   }
@@ -240,6 +238,7 @@ export default class Board {
     ScoreBoard.instance.newMessage(
       `${currentPlayer.name} arrived at ${activePlayerField.fieldName}`,
     );
+
     await currentPlayer.decide(
       activePlayerField,
       this.#fields,
@@ -248,6 +247,31 @@ export default class Board {
 
     // post-move rerender of players
     this.#renderPlayers();
+
+    // buy/sell phase
+
+    await new Promise((resolve) => {
+      const barterBtn = document.querySelector("#sell-btn");
+      const passBtn = document.querySelector("#pass-btn");
+
+      const barterFn = () => {
+        const modal = new barterModal(this.#players);
+        this.#domElement.append(modal.domElement);
+      };
+
+      const passFn = () => {
+        passBtn.removeEventListener("click", passFn);
+        passBtn.disabled = true;
+        barterBtn.removeEventListener("click", barterFn);
+        barterBtn.disabled = true;
+        resolve();
+      };
+
+      barterBtn.disabled = false;
+      passBtn.disabled = false;
+      barterBtn.addEventListener("click", barterFn);
+      passBtn.addEventListener("click", passFn);
+    });
 
     // check for bankrupt players
 
