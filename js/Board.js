@@ -168,6 +168,7 @@ export default class Board {
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
+    console.log(this.#fields)
     const currentPlayer = this.#players[this.#currentPlayerIndex];
     // jail path
     if (currentPlayer.turnsInJail > 0) {

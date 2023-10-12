@@ -6,7 +6,7 @@ import ScoreBoard from "./ScoreBoard.js";
 TODO:
 - card events, buttons as card
 - ability to buy house on all properties in the property group if on any of the property group fields
-- station/utility events
+- utility events rent calc
 - name input, color picker and start game button
 - sell property dialog
 - make it look nice

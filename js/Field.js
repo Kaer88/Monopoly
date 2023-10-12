@@ -121,11 +121,11 @@ export default class Field {
     return this.#penalties
   }
 
-  get utilityFlag () {
+  get utilityFlag() {
     return this.#utilityFlag;
   }
 
-  get stationFlag () {
+  get stationFlag() {
     return this.#stationFlag;
   }
   get value() {

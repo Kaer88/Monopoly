@@ -84,10 +84,12 @@ export async function propertyEvent(
     }
 
     if (field.utilityFlag) {
+      // itt nem stimmel a fizetendő
+      // a szabály: ha egy van, akkor 4szerese a kockának, ha 2, akkor 10szerese
       payablePenalty =
         allFields.filter(
-          (notCurrentField) =>
-            notCurrentField.owner === field.owner && field.utilityFlag === true,
+          (otherField) =>
+            otherField.owner === field.owner && otherField.utilityFlag === true,
         ).length * diceValue.reduce((acc, curr) => (acc += curr), 0);
       ScoreBoard.instance.newMessage(
         `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
@@ -96,19 +98,18 @@ export async function propertyEvent(
       console.log("this is a utility field");
       await payPromise();
     }
-
+    //
     if (field.stationFlag) {
       console.log(
         allFields.filter(
-          (notCurrentField) =>
-            notCurrentField.owner === field.owner && field.stationFlag === true,
+          (otherField) => otherField.owner === field.owner && otherField.stationFlag === true,
         ),
       );
       payablePenalty =
         field.penalties[
           allFields.filter(
-            (notCurrentField) =>
-              notCurrentField.owner === field.owner && field.stationFlag,
+            (otherField) =>
+              otherField.owner === field.owner && otherField.stationFlag === true,
           ).length - 1
         ];
       ScoreBoard.instance.newMessage(
@@ -137,7 +138,8 @@ export async function propertyEvent(
           ScoreBoard.instance.newMessage("Not enough funds!");
           return;
         }
-
+        // TODO
+        // Typerror: player is undefined
         try {
           field.addHouse(player);
           player.balance -= field.buildPrice;
