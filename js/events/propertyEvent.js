@@ -6,9 +6,16 @@ import ScoreBoard from "../ScoreBoard.js";
  * @param field {Field}
  * @param allFields {Field[]}
  * @param refreshScoreFn {function}
+ * @param diceValue {Number[]}
  * @returns {Promise}
  */
-export async function propertyEvent(player, field, allFields, refreshScoreFn) {
+export async function propertyEvent(
+  player,
+  field,
+  allFields,
+  refreshScoreFn,
+  diceValue,
+) {
   if (field.owner === null) {
     return new Promise((resolve) => {
       const buyBtn = document.querySelector("#buy-btn");
@@ -51,12 +58,9 @@ export async function propertyEvent(player, field, allFields, refreshScoreFn) {
   }
 
   if (field.owner !== player) {
-    if (!field.utilityFlag && !field.stationFlag) {
-      const payablePenalty = field.getPenalty();
-      ScoreBoard.instance.newMessage(
-        `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
-      );
+    let payablePenalty;
 
+    const payPromise = () => {
       return new Promise((resolve) => {
         const payBtn = document.querySelector("#pay-btn");
         const payFn = () => {
@@ -69,20 +73,49 @@ export async function propertyEvent(player, field, allFields, refreshScoreFn) {
         payBtn.disabled = false;
         payBtn.addEventListener("click", payFn);
       });
+    };
+
+    if (!field.utilityFlag && !field.stationFlag) {
+      payablePenalty = field.getPenalty();
+      ScoreBoard.instance.newMessage(
+        `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
+      );
+      await payPromise();
     }
 
     if (field.utilityFlag) {
-      return new Promise((resolve) => {
-        console.log("this is a utility field");
-        resolve();
-      });
+      payablePenalty =
+        allFields.filter(
+          (notCurrentField) =>
+            notCurrentField.owner === field.owner && field.utilityFlag === true,
+        ).length * diceValue.reduce((acc, curr) => (acc += curr), 0);
+      ScoreBoard.instance.newMessage(
+        `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
+      );
+      console.log(payablePenalty);
+      console.log("this is a utility field");
+      await payPromise();
     }
 
     if (field.stationFlag) {
-      return new Promise((resolve) => {
-        console.log("this is a station field");
-        resolve();
-      });
+      console.log(
+        allFields.filter(
+          (notCurrentField) =>
+            notCurrentField.owner === field.owner && field.stationFlag === true,
+        ),
+      );
+      payablePenalty =
+        field.penalties[
+          allFields.filter(
+            (notCurrentField) =>
+              notCurrentField.owner === field.owner && field.stationFlag,
+          ).length - 1
+        ];
+      ScoreBoard.instance.newMessage(
+        `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
+      );
+      console.log("this is a station field");
+      await payPromise();
     }
   }
 

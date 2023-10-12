@@ -27,7 +27,7 @@ export default class Board {
           field.buildPrice,
           field.propertyGroupId,
           field.utilityFlag,
-          field.stationFlag
+          field.stationFlag,
         ),
     );
 
@@ -145,7 +145,7 @@ export default class Board {
   }
 
   async #rollDice(currentPlayer) {
-    await new Promise((resolve) => {
+    return new Promise((resolve) => {
       ScoreBoard.instance.newMessage(`${currentPlayer.name}. roll the dice`);
       const rollBtnHandler = () => {
         this.#diceRolled = diceRoll();
@@ -245,10 +245,12 @@ export default class Board {
       activePlayerField,
       this.#fields,
       this.#refreshScoreBoard,
+      this.#diceRolled,
     );
 
-    // post-move rerender of players
+    // post-move rerender of players and score
     this.#renderPlayers();
+    this.#refreshScoreBoard();
 
     // buy/sell phase
 
@@ -268,7 +270,6 @@ export default class Board {
         barterBtn.disabled = true;
         resolve();
       };
-      console.log(this.#fields)
       barterBtn.disabled = false;
       passBtn.disabled = false;
       barterBtn.addEventListener("click", barterFn);

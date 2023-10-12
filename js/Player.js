@@ -70,7 +70,7 @@ export default class Player {
     this.#domElement.style.width = "1em";
   }
 
-  async decide(fieldInfo, allFields, refreshScoreFn) {
-    return fieldInfo.eventOnField(this, allFields, refreshScoreFn);
+  async decide(fieldInfo, allFields, refreshScoreFn, diceValue) {
+    return fieldInfo.eventOnField(this, allFields, refreshScoreFn, diceValue);
   }
 }

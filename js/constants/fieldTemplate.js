@@ -49,8 +49,7 @@ export const fieldTemplate = [
     name: "Kings Cross Station",
     value: 200,
     eventFn: propertyEvent,
-    penalties: [25, 25, 25, 25, 25, 25],
-    buildPrice: 50,
+    penalties:  [25, 50, 100, 200],
     stationFlag : true
   },
   {
@@ -122,7 +121,7 @@ export const fieldTemplate = [
     name: "Marylebone Station",
     value: 200,
     eventFn: propertyEvent,
-    penalties: [25, 25, 25, 25, 25, 25],
+    penalties:  [25, 50, 100, 200],
     stationFlag : true
   },
   {
@@ -192,7 +191,7 @@ export const fieldTemplate = [
     name: "Fenchurch Station",
     value: 200,
     eventFn: propertyEvent,
-    penalties: [25, 25, 25, 25, 25, 25],
+    penalties: [25, 50, 100, 200],
     stationFlag : true
   },
   {
@@ -265,7 +264,7 @@ export const fieldTemplate = [
     name: "Liverpool station",
     value: 200,
     eventFn: propertyEvent,
-    penalties: [25, 25, 25, 25, 25, 25],
+    penalties:  [25, 50, 100, 200],
     stationFlag : true
   },
   {

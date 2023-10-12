@@ -117,6 +117,10 @@ export default class Field {
     return this.#fieldName;
   }
 
+  get penalties() {
+    return this.#penalties
+  }
+
   get utilityFlag () {
     return this.#utilityFlag;
   }
@@ -162,8 +166,8 @@ export default class Field {
   getPenalty() {
     return this.#penalties[this.#nrOfHousesBuilt];
   }
-  async eventOnField(player, allFields, refreshScoreFn) {
-    return this.#eventOnField(player, this, allFields, refreshScoreFn);
+  async eventOnField(player, allFields, refreshScoreFn, diceValue) {
+    return this.#eventOnField(player, this, allFields, refreshScoreFn, diceValue);
   }
 
   get domElement() {
