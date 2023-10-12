@@ -30,7 +30,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: () =>{},
+    eventFn: () => {},
   },
   {
     name: "Whitechapel Road",
@@ -49,8 +49,8 @@ export const fieldTemplate = [
     name: "Kings Cross Station",
     value: 200,
     eventFn: propertyEvent,
-    penalties:  [25, 50, 100, 200],
-    stationFlag : true
+    penalties: [25, 50, 100, 200],
+    stationFlag: true,
   },
   {
     name: "The Angel Islington",
@@ -63,7 +63,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: () =>{},
+    eventFn: () => {},
   },
   {
     name: "Euston Road",
@@ -99,7 +99,7 @@ export const fieldTemplate = [
     value: 150,
     eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
-    utilityFlag : true
+    utilityFlag: true,
   },
   {
     name: "Whitehall",
@@ -121,8 +121,8 @@ export const fieldTemplate = [
     name: "Marylebone Station",
     value: 200,
     eventFn: propertyEvent,
-    penalties:  [25, 50, 100, 200],
-    stationFlag : true
+    penalties: [25, 50, 100, 200],
+    stationFlag: true,
   },
   {
     name: "Bow Street",
@@ -135,7 +135,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: () =>{},
+    eventFn: () => {},
   },
   {
     name: "Marlborough St.",
@@ -169,7 +169,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: () =>{},
+    eventFn: () => {},
   },
   {
     name: "Fleet Street",
@@ -192,7 +192,7 @@ export const fieldTemplate = [
     value: 200,
     eventFn: propertyEvent,
     penalties: [25, 50, 100, 200],
-    stationFlag : true
+    stationFlag: true,
   },
   {
     name: "Leicester Square",
@@ -215,8 +215,7 @@ export const fieldTemplate = [
     value: 150,
     eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
-    utilityFlag : true
-
+    utilityFlag: true,
   },
   {
     name: "Piccadilly",
@@ -264,8 +263,8 @@ export const fieldTemplate = [
     name: "Liverpool station",
     value: 200,
     eventFn: propertyEvent,
-    penalties:  [25, 50, 100, 200],
-    stationFlag : true
+    penalties: [25, 50, 100, 200],
+    stationFlag: true,
   },
   {
     name: "Chance",

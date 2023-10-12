@@ -47,7 +47,10 @@ export default class Controls {
     barterButton.id = "sell-btn";
     barterButton.disabled = "true";
 
-
+    const endTurnBtn = document.createElement("BUTTON");
+    endTurnBtn.id = "endturn-btn";
+    endTurnBtn.textContent = "END TURN!";
+    endTurnBtn.disabled = true;
 
     buttonContainer.append(
       rollButton,
@@ -56,7 +59,8 @@ export default class Controls {
       payButton,
       buildButton,
       useCardButton,
-      barterButton
+      barterButton,
+      endTurnBtn,
     );
 
     this.#domElement = buttonContainer;

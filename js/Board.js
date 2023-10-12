@@ -5,7 +5,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./ScoreBoard.js";
 import Controls from "./Controls.js";
-import barterModal from "./barterModal.js";
+import barterModal from "./BarterModal.js";
 export default class Board {
   #fields = [];
   #players;
@@ -252,32 +252,31 @@ export default class Board {
     this.#renderPlayers();
     this.#refreshScoreBoard();
 
-    // buy/sell phase
+    // buy/sell phase, and end turn
 
     await new Promise((resolve) => {
       const barterBtn = document.querySelector("#sell-btn");
-      const passBtn = document.querySelector("#pass-btn");
+      const endTurnBtn = document.querySelector("#endturn-btn");
 
       const barterFn = () => {
         const modal = new barterModal(this.#players);
         this.#domElement.append(modal.domElement);
       };
 
-      const passFn = () => {
-        passBtn.removeEventListener("click", passFn);
-        passBtn.disabled = true;
+      const endTurnFn = () => {
+        endTurnBtn.removeEventListener("click", endTurnFn);
+        endTurnBtn.disabled = true;
         barterBtn.removeEventListener("click", barterFn);
         barterBtn.disabled = true;
         resolve();
       };
       barterBtn.disabled = false;
-      passBtn.disabled = false;
+      endTurnBtn.disabled = false;
       barterBtn.addEventListener("click", barterFn);
-      passBtn.addEventListener("click", passFn);
+      endTurnBtn.addEventListener("click", endTurnFn);
     });
 
     // check for bankrupt players
-
     const bankruptPlayers = this.#players.filter(
       (player) => player.balance <= 0,
     );
