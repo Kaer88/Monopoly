@@ -1,5 +1,13 @@
 import ScoreBoard from "../ScoreBoard.js";
 
+/**
+ *
+ * @param player {Player}
+ * @param field {Field}
+ * @param allFields {Field[]}
+ * @param refreshScoreFn {function}
+ * @returns {Promise}
+ */
 export async function propertyEvent(player, field, allFields, refreshScoreFn) {
   if (field.owner === null) {
     return new Promise((resolve) => {
@@ -43,23 +51,39 @@ export async function propertyEvent(player, field, allFields, refreshScoreFn) {
   }
 
   if (field.owner !== player) {
-    const payablePenalty = field.getPenalty();
-    ScoreBoard.instance.newMessage(
-      `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
-    );
+    if (!field.utilityFlag && !field.stationFlag) {
+      const payablePenalty = field.getPenalty();
+      ScoreBoard.instance.newMessage(
+        `${field.owner.name}'s land, ${player.name} must pay rent: ${payablePenalty}$.`,
+      );
 
-    return new Promise((resolve) => {
-      const payBtn = document.querySelector("#pay-btn");
-      const payFn = () => {
-        player.balance -= payablePenalty;
-        field.owner.balance += payablePenalty;
-        payBtn.disabled = true;
-        payBtn.removeEventListener("click", payFn);
+      return new Promise((resolve) => {
+        const payBtn = document.querySelector("#pay-btn");
+        const payFn = () => {
+          player.balance -= payablePenalty;
+          field.owner.balance += payablePenalty;
+          payBtn.disabled = true;
+          payBtn.removeEventListener("click", payFn);
+          resolve();
+        };
+        payBtn.disabled = false;
+        payBtn.addEventListener("click", payFn);
+      });
+    }
+
+    if (field.utilityFlag) {
+      return new Promise((resolve) => {
+        console.log("this is a utility field");
         resolve();
-      };
-      payBtn.disabled = false;
-      payBtn.addEventListener("click", payFn);
-    });
+      });
+    }
+
+    if (field.stationFlag) {
+      return new Promise((resolve) => {
+        console.log("this is a station field");
+        resolve();
+      });
+    }
   }
 
   if (

@@ -3,7 +3,8 @@ export default class barterModal {
   domElement;
   #currentPlayer;
 
-  constructor(players) {
+  constructor(players, currentPlayer) {
+    this.#currentPlayer = players[currentPlayer];
     this.#players = players;
     this.domElement = (function () {
       let container = document.createElement("DIV");
@@ -22,14 +23,14 @@ export default class barterModal {
       contentDiv.style.width = "50vw";
       contentDiv.style.backgroundColor = "white";
 
-      const hideElementFn = function () {
-        container.remove()
-        closeBtn.removeEventListener("click", hideElementFn);
+      const removeElementFn = function () {
+        container.remove();
+        closeBtn.removeEventListener("click", removeElementFn);
       };
 
       const closeBtn = document.createElement("BUTTON");
       closeBtn.textContent = "CLOSE";
-      closeBtn.addEventListener("click", hideElementFn);
+      closeBtn.addEventListener("click", removeElementFn);
       contentDiv.append(closeBtn);
 
       container.append(contentDiv);
@@ -37,7 +38,4 @@ export default class barterModal {
       return container;
     })();
   }
-
-
-
 }

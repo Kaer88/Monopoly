@@ -30,7 +30,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: goToJail,
+    eventFn: () =>{},
   },
   {
     name: "Whitechapel Road",
@@ -48,9 +48,10 @@ export const fieldTemplate = [
   {
     name: "Kings Cross Station",
     value: 200,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
     buildPrice: 50,
+    stationFlag : true
   },
   {
     name: "The Angel Islington",
@@ -63,7 +64,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: goToJail,
+    eventFn: () =>{},
   },
   {
     name: "Euston Road",
@@ -97,8 +98,9 @@ export const fieldTemplate = [
   {
     name: "Electric company",
     value: 150,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
+    utilityFlag : true
   },
   {
     name: "Whitehall",
@@ -119,8 +121,9 @@ export const fieldTemplate = [
   {
     name: "Marylebone Station",
     value: 200,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
+    stationFlag : true
   },
   {
     name: "Bow Street",
@@ -133,7 +136,7 @@ export const fieldTemplate = [
   {
     name: "Community chest",
     value: 0,
-    eventFn: goToJail,
+    eventFn: () =>{},
   },
   {
     name: "Marlborough St.",
@@ -167,7 +170,7 @@ export const fieldTemplate = [
   {
     name: "Chance",
     value: 0,
-    eventFn: goToJail,
+    eventFn: () =>{},
   },
   {
     name: "Fleet Street",
@@ -188,8 +191,9 @@ export const fieldTemplate = [
   {
     name: "Fenchurch Station",
     value: 200,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
+    stationFlag : true
   },
   {
     name: "Leicester Square",
@@ -210,8 +214,10 @@ export const fieldTemplate = [
   {
     name: "Waterworks",
     value: 150,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
+    utilityFlag : true
+
   },
   {
     name: "Piccadilly",
@@ -258,8 +264,9 @@ export const fieldTemplate = [
   {
     name: "Liverpool station",
     value: 200,
-    eventFn: () => {},
+    eventFn: propertyEvent,
     penalties: [25, 25, 25, 25, 25, 25],
+    stationFlag : true
   },
   {
     name: "Chance",

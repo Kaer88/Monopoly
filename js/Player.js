@@ -39,6 +39,7 @@ export default class Player {
   get turnsInJail() {
     return this.#turnsInJail;
   }
+
   set turnsInJail(number) {
     this.#turnsInJail = number;
   }

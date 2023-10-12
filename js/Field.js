@@ -6,11 +6,12 @@ export default class Field {
   #value;
   #owner = null;
   #domElement;
-  #propertyGroupColor;
   #propertyGroupId;
   #nrOfHousesBuilt = 0;
   #penalties;
   #buildPrice;
+  #utilityFlag;
+  #stationFlag;
 
   /**
    * @param name {string}
@@ -19,6 +20,8 @@ export default class Field {
    * @param penalties {Number[]}
    * @param buildPrice {Number}
    * @param propertyGroupId {Number}
+   * @param utilityFlag {boolean}
+   * @param stationFlag {boolean}
    */
   constructor(
     name,
@@ -27,6 +30,8 @@ export default class Field {
     penalties,
     buildPrice,
     propertyGroupId,
+    utilityFlag,
+    stationFlag,
   ) {
     this.#fieldName = name;
     this.#value = value;
@@ -34,6 +39,8 @@ export default class Field {
     this.#penalties = penalties;
     this.#buildPrice = buildPrice;
     this.#propertyGroupId = propertyGroupId;
+    this.#utilityFlag = utilityFlag;
+    this.#stationFlag = stationFlag;
 
     const fieldDiv = document.createElement("DIV");
     fieldDiv.style.border = "1px solid black";
@@ -110,6 +117,13 @@ export default class Field {
     return this.#fieldName;
   }
 
+  get utilityFlag () {
+    return this.#utilityFlag;
+  }
+
+  get stationFlag () {
+    return this.#stationFlag;
+  }
   get value() {
     return this.#value;
   }
