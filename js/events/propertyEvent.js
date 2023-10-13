@@ -102,14 +102,16 @@ export async function propertyEvent(
     if (field.stationFlag) {
       console.log(
         allFields.filter(
-          (otherField) => otherField.owner === field.owner && otherField.stationFlag === true,
+          (otherField) =>
+            otherField.owner === field.owner && otherField.stationFlag === true,
         ),
       );
       payablePenalty =
         field.penalties[
           allFields.filter(
             (otherField) =>
-              otherField.owner === field.owner && otherField.stationFlag === true,
+              otherField.owner === field.owner &&
+              otherField.stationFlag === true,
           ).length - 1
         ];
       ScoreBoard.instance.newMessage(
@@ -139,14 +141,12 @@ export async function propertyEvent(
           return;
         }
         // TODO
-        // Typerror: player is undefined
-        try {
-          field.addHouse(player);
-          player.balance -= field.buildPrice;
-          refreshScoreFn();
-        } catch (err) {
-          ScoreBoard.instance.newMessage(err);
-        }
+        // Typerror: player is undefined?? -- probably fixed
+        console.log(player);
+        field.addHouse(player);
+        player.balance -= field.buildPrice;
+        player.properties.push(field);
+        refreshScoreFn();
         ScoreBoard.instance.newMessage(
           `${player.name} built a house on ${field.fieldName}`,
         );

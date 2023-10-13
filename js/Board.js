@@ -116,8 +116,8 @@ export default class Board {
   }
 
   #refreshScoreBoard() {
-    return ScoreBoard.instance.updatePlayerState(
-      this.#players,
+    ScoreBoard.instance.updatePlayerState(
+      this.players,
       this.#currentPlayerIndex,
     );
   }
@@ -135,6 +135,7 @@ export default class Board {
       { name: "Gerzson", color: "blue" },
     ]);
     this.#renderPlayers();
+    ScoreBoard.instance.players = this.#players
     ScoreBoard.instance.updatePlayerState(
       this.#players,
       this.#currentPlayerIndex,
@@ -168,7 +169,8 @@ export default class Board {
 
   async #gameplayLoop() {
     if (this.#players.length === 1) return null;
-    console.log(this.#fields)
+    console.log(this.#fields);
+    console.log(this.#players);
     const currentPlayer = this.#players[this.#currentPlayerIndex];
     // jail path
     if (currentPlayer.turnsInJail > 0) {
