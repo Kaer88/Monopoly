@@ -5,7 +5,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./ScoreBoard.js";
 import Controls from "./Controls.js";
-import barterModal from "./BarterModal.js";
+import Modal from "./Modal.js";
 export default class Board {
   #fields = [];
   #players;
@@ -261,8 +261,11 @@ export default class Board {
       const endTurnBtn = document.querySelector("#endturn-btn");
 
       const barterFn = () => {
-        const modal = new barterModal(this.#players);
+        const modal = new Modal();
         this.#domElement.append(modal.domElement);
+        // add barter screen to modal with playerdata
+
+
       };
 
       const endTurnFn = () => {

@@ -1,11 +1,9 @@
-export default class barterModal {
-  #players;
+export default class Modal {
+  #childElement
   domElement;
-  #currentPlayer;
 
-  constructor(players, currentPlayer) {
-    this.#currentPlayer = players[currentPlayer];
-    this.#players = players;
+
+  constructor() {
     this.domElement = (function () {
       let container = document.createElement("DIV");
       container.id = "#sell-modal";
@@ -23,14 +21,14 @@ export default class barterModal {
       contentDiv.style.width = "50vw";
       contentDiv.style.backgroundColor = "white";
 
-      const removeElementFn = function () {
+      const removeSelfFn = function () {
         container.remove();
-        closeBtn.removeEventListener("click", removeElementFn);
+        closeBtn.removeEventListener("click", removeSelfFn);
       };
 
       const closeBtn = document.createElement("BUTTON");
       closeBtn.textContent = "CLOSE";
-      closeBtn.addEventListener("click", removeElementFn);
+      closeBtn.addEventListener("click", removeSelfFn);
       contentDiv.append(closeBtn);
 
       container.append(contentDiv);

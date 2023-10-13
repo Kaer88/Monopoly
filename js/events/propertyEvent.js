@@ -1,4 +1,5 @@
 import ScoreBoard from "../ScoreBoard.js";
+import Modal from "../Modal.js";
 
 /**
  *
@@ -136,6 +137,10 @@ export async function propertyEvent(
         `Property of ${player.name}, house can be built for ${field.buildPrice}`,
       );
       const buildFn = () => {
+
+        const modal = new Modal()
+        document.querySelector("#board").append(modal.domElement);
+
         if (player.balance < field.buildPrice) {
           ScoreBoard.instance.newMessage("Not enough funds!");
           return;
