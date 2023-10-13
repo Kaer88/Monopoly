@@ -1,6 +1,7 @@
 let instance;
 let domElement;
 let players;
+let currentPlayerIndexReference = 0;
 //attempt at singleton class
 export default class ScoreBoard {
   static get instance() {
@@ -28,35 +29,40 @@ export default class ScoreBoard {
         domElement = scoreBoardContainer;
       })();
     }
-    console.log(players)
     return instance;
   }
   get domElement() {
     return domElement;
   }
 
-  set players(playerArray) {
-    console.log(playerArray)
-    players = playerArray;
-    domElement.children[1].textContent = playerArray.reduce((acc, curr) => acc += acc + " " + curr.name, "")
+  initPlayers(playerArrayReference, playerIndexReference) {
+    players = playerArrayReference;
   }
-  /**
-   *
-   * @param playerState {Player[]}
-   * @param currentPlayerIndex{number}
-   */
-  updatePlayerState(playerState, currentPlayerIndex) {
+
+  // nem érzem ezt optimális megoldásnak, de így a Scoreboardnak csak egyszer kell beadni az adatokat, utána nem kell paraméter
+  nextPlayer() {
+    if (currentPlayerIndexReference === players.length - 1) {
+      currentPlayerIndexReference = 0;
+    } else {
+      currentPlayerIndexReference = ++currentPlayerIndexReference;
+    }
+    console.log(currentPlayerIndexReference);
+  }
+
+  updatePlayerState() {
     const targetElement = domElement.children[0];
     // remove outdated elements
     targetElement.innerHTML = "";
-    playerState.forEach((playerData, idx) => {
+    players.forEach((playerData, idx) => {
       const playerContainer = document.createElement("DIV");
       playerContainer.style.display = "grid";
       playerContainer.style.gridTemplateColumns = "1fr 1fr 1fr";
       playerContainer.style.alignItems = "center";
       playerContainer.style.paddingLeft = "0.5em";
       playerContainer.style.border =
-        idx === currentPlayerIndex ? `3px solid ${playerData.color}` : "";
+        idx === currentPlayerIndexReference
+          ? `3px solid ${playerData.color}`
+          : "";
       const nameSpan = document.createElement("SPAN");
       const balanceSpan = document.createElement("SPAN");
       const isInJail = document.createElement("SPAN");

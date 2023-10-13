@@ -116,10 +116,11 @@ export default class Board {
   }
 
   #refreshScoreBoard() {
-    ScoreBoard.instance.updatePlayerState(
-      this.players,
-      this.#currentPlayerIndex,
-    );
+    ScoreBoard.instance.updatePlayerState();
+  }
+
+  get currentPlayerIndex() {
+    return this.#currentPlayerIndex;
   }
 
   get players() {
@@ -135,11 +136,8 @@ export default class Board {
       { name: "Gerzson", color: "blue" },
     ]);
     this.#renderPlayers();
-    ScoreBoard.instance.players = this.#players
-    ScoreBoard.instance.updatePlayerState(
-      this.#players,
-      this.#currentPlayerIndex,
-    );
+    ScoreBoard.instance.initPlayers(this.#players);
+    ScoreBoard.instance.updatePlayerState(this.#currentPlayerIndex);
 
     await this.#gameplayLoop();
     console.log("gameplay loop end");
@@ -212,6 +210,7 @@ export default class Board {
         } else {
           this.#currentPlayerIndex = ++this.#currentPlayerIndex;
         }
+        ScoreBoard.instance.nextPlayer()
         this.#diceRolled = null;
         this.#refreshScoreBoard();
         return this.#gameplayLoop();
@@ -298,6 +297,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
+    ScoreBoard.instance.nextPlayer()
     this.#diceRolled = null;
     this.#refreshScoreBoard();
     return this.#gameplayLoop();

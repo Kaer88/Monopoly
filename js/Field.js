@@ -1,4 +1,5 @@
 import getPropertyColor from "./util/propertyGroupColors.js";
+import ScoreBoard from "./ScoreBoard.js";
 
 export default class Field {
   #eventOnField; // property event, card event, jail event
@@ -144,8 +145,10 @@ export default class Field {
   }
 
   addHouse(player) {
-    if (this.#nrOfHousesBuilt > 3)
-      throw new Error("Cant build any more house on this field!");
+    if (this.#nrOfHousesBuilt > 3) {
+      ScoreBoard.instance.newMessage("Cant build any more house on this field!");
+      return
+    }
     this.#nrOfHousesBuilt += 1;
     const houseDom = document.createElement("DIV");
     houseDom.style.backgroundColor = player.color;

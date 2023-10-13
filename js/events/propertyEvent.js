@@ -140,9 +140,6 @@ export async function propertyEvent(
           ScoreBoard.instance.newMessage("Not enough funds!");
           return;
         }
-        // TODO
-        // Typerror: player is undefined?? -- probably fixed
-        console.log(player);
         field.addHouse(player);
         player.balance -= field.buildPrice;
         player.properties.push(field);
