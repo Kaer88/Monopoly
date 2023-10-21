@@ -173,7 +173,7 @@ export default class Board {
     // jail path
     if (currentPlayer.turnsInJail > 0) {
       const jailField = this.#fields[10];
-      // player decide on paying or using card
+      // player decide on paying or using card, invoke jail field event
       const gotOutOfJailRes = await currentPlayer.decide(
         jailField,
         this.#fields,

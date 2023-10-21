@@ -5,10 +5,12 @@ import ScoreBoard from "./ScoreBoard.js";
 /*
 TODO:
 - card events, buttons as card
-- ability to buy house on all properties in the property group if on any of the property group fields
-- utility events rent calc
+- build component for modal
+- parent modal element could be a singleton => remove html child when closed
+    - add some border radius, proper close button 
+- utility events rent calc (?)
 - name input, color picker and start game button
-- sell property dialog
+- sell property dialog component
 - make it look nice
 - BUG: can go below 0 with paying prison fine and still roll
 
