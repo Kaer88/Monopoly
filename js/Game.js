@@ -4,6 +4,8 @@ import ScoreBoard from "./ScoreBoard.js";
 
 /*
 TODO:
+
+
 - card events, buttons as card
 - build component for modal
 - parent modal element could be a singleton => remove html child when closed
