@@ -5,7 +5,7 @@
 - card events, buttons as card
 - build component for modal
 - parent modal element could be a singleton => remove html child when closed
-    - add some border radius, proper close button 
+- add some border radius, proper close button to modal
 - utility events rent calc (?)
 - name input, color picker and start game button
 - sell property dialog component

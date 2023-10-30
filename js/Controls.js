@@ -1,8 +1,6 @@
 export default class Controls {
   #domElement;
 
-  constructor() {}
-
   initControls() {
     const buttonContainer = document.createElement("DIV");
     buttonContainer.style.height = "5em";
