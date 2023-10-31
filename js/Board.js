@@ -5,7 +5,7 @@ import diceRoll from "./util/diceRoll.js";
 import setNextField from "./util/setNextField.js";
 import ScoreBoard from "./ScoreBoard.js";
 import Controls from "./Controls.js";
-import BarterModal from "./BarterModal.js";
+import TradeModal from "./TradeModal.js";
 export default class Board {
   #fields = [];
   #players;
@@ -210,7 +210,7 @@ export default class Board {
         } else {
           this.#currentPlayerIndex = ++this.#currentPlayerIndex;
         }
-        ScoreBoard.instance.nextPlayer()
+        ScoreBoard.instance.nextPlayer();
         this.#diceRolled = null;
         this.#refreshScoreBoard();
         return this.#gameplayLoop();
@@ -257,31 +257,27 @@ export default class Board {
     // buy/sell phase, and end turn
 
     await new Promise((resolve) => {
-      const barterBtn = document.querySelector("#sell-btn");
+      const tradeBtn = document.querySelector("#trade-btn");
       const endTurnBtn = document.querySelector("#endturn-btn");
 
-      const barterFn = () => {
-        const modal = new BarterModal();
-        this.#domElement.append(modal.domElement)
-        console.log(modal.domElement.children)
-        modal.initDomElement();
-
-
-        // add barter screen to modal with playerdata
-
-
+      // add trade screen to modal with playerdata
+      const modal = new TradeModal(this.#players, this.#currentPlayerIndex);
+      modal.initComponent();
+      const tradeFn = () => {
+        this.#domElement.append(modal.domElement);
+        tradeBtn.removeEventListener("click", tradeFn);
       };
 
       const endTurnFn = () => {
         endTurnBtn.removeEventListener("click", endTurnFn);
         endTurnBtn.disabled = true;
-        barterBtn.removeEventListener("click", barterFn);
-        barterBtn.disabled = true;
+        tradeBtn.removeEventListener("click", tradeFn);
+        tradeBtn.disabled = true;
         resolve();
       };
-      barterBtn.disabled = false;
+      tradeBtn.disabled = false;
       endTurnBtn.disabled = false;
-      barterBtn.addEventListener("click", barterFn);
+      tradeBtn.addEventListener("click", tradeFn);
       endTurnBtn.addEventListener("click", endTurnFn);
     });
 
@@ -304,7 +300,7 @@ export default class Board {
     } else {
       this.#currentPlayerIndex = ++this.#currentPlayerIndex;
     }
-    ScoreBoard.instance.nextPlayer()
+    ScoreBoard.instance.nextPlayer();
     this.#diceRolled = null;
     this.#refreshScoreBoard();
     return this.#gameplayLoop();

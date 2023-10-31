@@ -41,8 +41,8 @@ export default class Controls {
     useCardButton.disabled = "true";
 
     const barterButton = document.createElement("BUTTON");
-    barterButton.textContent = "BARTER!";
-    barterButton.id = "sell-btn";
+    barterButton.textContent = "TRADE!";
+    barterButton.id = "trade-btn";
     barterButton.disabled = "true";
 
     const endTurnBtn = document.createElement("BUTTON");

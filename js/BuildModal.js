@@ -1,13 +1,11 @@
 import Modal from "./Modal.js";
 
 export default class BuildModal extends Modal{
-  #players;
-  #currentPlayerIdx;
+  #player;
 
-  constructor(players, currentPlayerIdx) {
+  constructor(player) {
     super()
-    this.#players = players;
-    this.#currentPlayerIdx = currentPlayerIdx;
+    this.#player = player;
   }
 
   initDomElement() {
@@ -15,6 +13,6 @@ export default class BuildModal extends Modal{
     container.style.height = "100%";
     container.style.width = "100%";
     container.innerHTML = "teszt!"
-    this.domElement.append(container);
+    this.domElement.children[0].append(container);
   }
 }
