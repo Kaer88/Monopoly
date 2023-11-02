@@ -266,6 +266,7 @@ export default class Board {
       const tradeFn = () => {
         this.#domElement.append(modal.domElement);
         tradeBtn.removeEventListener("click", tradeFn);
+        tradeBtn.disabled = true;
       };
 
       const endTurnFn = () => {
