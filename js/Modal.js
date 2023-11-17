@@ -19,6 +19,8 @@ export default class Modal {
       contentDiv.style.height = "60vh";
       contentDiv.style.width = "50vw";
       contentDiv.style.backgroundColor = "white";
+      contentDiv.style.overflow = "scroll";
+
 
       const removeSelfFn = function () {
         container.remove();
